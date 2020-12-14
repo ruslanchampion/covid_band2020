@@ -1,0 +1,79 @@
+// @import "./scss/bootstrap.scss";
+// @import "./scss/custom";
+
+// === Mixins ===
+@mixin font-main {
+  font-family: "Chewy", cursive;
+}
+// === /Mixins ===
+
+// === Common ===
+:root {
+  font-size: 10px;
+}
+
+*,
+::after,
+::before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  @include font-main;
+  width: 100vw;
+  margin: 0 auto;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.table-container {
+  height: 700px;
+  overflow: scroll;
+  overflow-x: hidden;
+  font-size: 2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 500px;
+  width: 100%;
+  border: 1px solid black;
+}
+
+.table {
+  position: relative;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // margin: 0 auto;
+  // border: none;
+  // width: 100%;
+
+  .table-title {
+    font-size: 3rem;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    background-color: #212529;
+    margin: 0;
+  }
+
+  .count-of-cases {
+    font-size: 2.4rem;
+    color: crimson;
+  }
+  .country {
+  }
+  .country-flag {
+    width: 50px;
+  }
+}
+
+.search-input {
+  position: absolute;
+  padding: 15px 20px;
+  font-size: 2rem;
+}

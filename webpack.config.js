@@ -1,41 +1,68 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack')
+const path = require('path')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
-const htmlPlugin = new HtmlWebpackPlugin({
-  template: './public/index.html',
-  filename: './index.html',
-});
+module.exports = (env, options) => {
+	const isProduction = options.mode === 'production'
 
-module.exports = {
-  entry: './src/index.js',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
-  },
-  resolve: {
-    extensions: ['.js'],
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js?$/, loader: 'babel-loader',
-      },
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(svg|mp3|png|jpe?g)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[path][name].[ext]',
-            },
-          },
-        ],
-      },
-    ],
-  },
-  plugins: [htmlPlugin],
-};
+	const config = {
+		mode: isProduction ? 'production' : 'development',
+		devtool: isProduction ? 'none' : 'source-map',
+		watch: !isProduction,
+		entry: ['./src/script.js', './src/style.scss'],
+		output: {
+			path: path.join(__dirname, '/dist/'),
+			filename: 'bundle.js',
+		},
+
+		module: {
+			rules: [
+				{
+					test: /\.js$/,
+					exclude: /node_modules/,
+					use: {
+						loader: 'babel-loader',
+						options: {
+							presets: ['@babel/preset-env'],
+							plugins: ['@babel/plugin-proposal-class-properties'],
+						},
+					},
+				},
+				{
+					test: /\.scss$/,
+					use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+				},
+				{
+					test: /\.(png|svg|jpe?g|gif)$/i,
+					loader: 'file-loader',
+				},
+				{
+					test: /\.html$/i,
+					loader: 'html-loader',
+				},
+			],
+		},
+		devServer: {
+			inline: true,
+			port: 3000,
+		},
+		plugins: [
+			new CleanWebpackPlugin(),
+			new HtmlWebpackPlugin({
+				template: 'src/index.html',
+			}),
+			new MiniCssExtractPlugin({
+				filename: 'bundle.css',
+			}),
+			new CopyPlugin([
+				{ from: './src/assets/audio', to: 'audio' },
+				{ from: './src/assets/img', to: 'img' },
+			]),
+		],
+	}
+
+	return config
+}
