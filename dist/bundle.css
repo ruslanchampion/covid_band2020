@@ -18,77 +18,101 @@ body {
 
 .table-container {
   font-size: 2rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
   max-width: 500px;
   width: 100%;
-  border: 1px solid black; }
+  border: 1px solid black;
+  margin: 20px auto; }
+  .table-container .table {
+    max-width: 450px;
+    margin: 10px auto; }
+    .table-container .table .thead {
+      display: flex;
+      justify-content: center; }
+    .table-container .table .tbody {
+      display: block;
+      max-height: 600px;
+      height: auto;
+      overflow: scroll;
+      overflow-x: hidden; }
+      .table-container .table .tbody::-webkit-scrollbar {
+        width: 10px; }
+      .table-container .table .tbody::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+        border-radius: 20px; }
+      .table-container .table .tbody::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 20px; }
+      .table-container .table .tbody::-webkit-scrollbar-thumb:hover {
+        background: #555; }
+    .table-container .table .table-head {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      margin: 0;
+      border: none; }
+    .table-container .table .statistic-country {
+      cursor: pointer; }
+    .table-container .table .count-of-cases {
+      font-size: 2.4rem;
+      color: crimson;
+      padding-left: 30px; }
+    .table-container .table .country {
+      width: 45%; }
+    .table-container .table .country-flag {
+      width: 50px; }
+  .table-container .search-input {
+    padding: 15px 20px;
+    font-size: 2rem;
+    margin: 5px; }
 
-.table {
-  max-width: 450px;
-  margin: 10px auto; }
-  .table .thead {
+.btn {
+  width: 0;
+  height: 0;
+  background: transparent;
+  padding: 0;
+  transition: 0.3s ease-in-out; }
+  .btn:hover {
+    transform: scale(0.9); }
+
+.btn-prev {
+  border-style: solid;
+  border-width: 12.5px 25px 12.5px 0;
+  border-color: transparent #007bff transparent transparent;
+  margin-right: 30px; }
+
+.btn-next {
+  border-style: solid;
+  border-width: 12.5px 0 12.5px 25px;
+  border-color: transparent transparent transparent #007bff;
+  margin-left: 30px; }
+
+.info-container {
+  width: 300px;
+  height: 300px;
+  margin: 10px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid crimson;
+  font-size: 3rem; }
+  .info-container .title {
+    margin-bottom: 20px;
     display: flex;
-    justify-content: center; }
-  .table .tbody {
-    display: block;
-    max-height: 600px;
-    height: auto;
-    overflow: scroll;
-    overflow-x: hidden;
-    scroll-behavior: smooth; }
-    .table .tbody::-webkit-scrollbar {
-      width: 10px; }
-    .table .tbody::-webkit-scrollbar-track {
-      background: #f1f1f1;
-      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-      border-radius: 20px; }
-    .table .tbody::-webkit-scrollbar-thumb {
-      background: #888;
-      border-radius: 20px; }
-    .table .tbody::-webkit-scrollbar-thumb:hover {
-      background: #555; }
-  .table .table-head {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
     justify-content: center;
-    font-size: 3rem;
-    margin: 0;
-    border: none; }
-  .table .count-of-cases {
-    font-size: 2.4rem;
-    color: crimson;
-    padding-left: 30px; }
-  .table .country {
-    width: 37%; }
-  .table .country-flag {
-    width: 50px; }
-  .table .btn {
-    width: 0;
-    height: 0;
-    background: transparent;
-    padding: 0;
-    transition: 0.3s ease-in-out; }
-    .table .btn:hover {
-      transform: scale(0.9); }
-  .table .btn-prev {
-    border-style: solid;
-    border-width: 12.5px 25px 12.5px 0;
-    border-color: transparent #007bff transparent transparent;
-    margin-right: 30px; }
-  .table .btn-next {
-    border-style: solid;
-    border-width: 12.5px 0 12.5px 25px;
-    border-color: transparent transparent transparent #007bff;
-    margin-left: 30px; }
-
-.search-input {
-  padding: 15px 20px;
-  font-size: 2rem;
-  margin: 5px; }
+    align-items: center; }
+    .info-container .title .btn-prev {
+      margin-right: 10px; }
+    .info-container .title .btn-next {
+      margin-left: 10px; }
+  .info-container .info-numbers {
+    font-size: 5rem;
+    color: crimson; }
 
 
 /*# sourceMappingURL=bundle.css.map*/

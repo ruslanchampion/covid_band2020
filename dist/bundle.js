@@ -845,18 +845,129 @@ try {
 
 /***/ }),
 
-/***/ "./src/js/Data.js":
+/***/ "./src/js/Card.js":
 /*!************************!*\
-  !*** ./src/js/Data.js ***!
+  !*** ./src/js/Card.js ***!
   \************************/
-/*! exports provided: getData, postData, resetData */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getData", function() { return getData; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "postData", function() { return postData; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "resetData", function() { return resetData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Modal; });
+/* harmony import */ var _create__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./create */ "./src/js/create.js");
+/* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Data */ "./src/js/Data.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var categoryOfInfo = ['cases', 'deaths', 'recovered', 'tests'];
+
+var Modal = /*#__PURE__*/function () {
+  function Modal() {
+    var _this = this;
+
+    _classCallCheck(this, Modal);
+
+    _defineProperty(this, "createCard", function () {
+      var infoContainer = document.querySelector('.info-container');
+      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'title', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-prev card-btn', null, null, ['data-toggle', 'prev']), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'title-text', "Global ".concat(categoryOfInfo[_this.currentCase])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-next card-btn', null, null, ['data-toggle', 'next'])], infoContainer);
+    });
+
+    _defineProperty(this, "changeNumberInfo", function () {
+      var infoContainer = document.querySelector('.info-container');
+      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'info-numbers', "".concat(_this.data[categoryOfInfo[_this.currentCase]]), infoContainer);
+    });
+
+    _defineProperty(this, "removeDataInfo", function () {
+      var info = document.querySelector('.info-numbers');
+      info.remove();
+    });
+
+    _defineProperty(this, "switchCase", function (event) {
+      var currentTarget = event.currentTarget;
+      var value = currentTarget.dataset.toggle;
+      var title = document.querySelector('.title-text');
+
+      if (value === 'next') {
+        _this.currentCase += 1;
+
+        if (_this.currentCase === categoryOfInfo.length) {
+          _this.currentCase = 0;
+        }
+      } else {
+        _this.currentCase -= 1;
+
+        if (_this.currentCase === -1) {
+          _this.currentCase = categoryOfInfo.length - 1;
+        }
+      }
+
+      title.innerHTML = "Global ".concat(categoryOfInfo[_this.currentCase]);
+
+      _this.removeDataInfo();
+
+      _this.changeNumberInfo();
+    });
+
+    this.data = [];
+    this.currentCase = 0;
+  }
+
+  _createClass(Modal, [{
+    key: "handleMethods",
+    value: function handleMethods() {
+      var _this2 = this;
+
+      Object(_Data__WEBPACK_IMPORTED_MODULE_1__["getDataAll"])().then(function (data) {
+        _this2.data = data;
+
+        _this2.createCard();
+
+        _this2.changeNumberInfo();
+
+        _this2.setListeners();
+      })["catch"](function (err) {
+        return alert(err);
+      });
+      return this;
+    }
+  }, {
+    key: "setListeners",
+    value: function setListeners() {
+      var _this3 = this;
+
+      var toggleBtns = document.querySelectorAll('.card-btn');
+      toggleBtns.forEach(function (btn) {
+        return btn.addEventListener('click', _this3.switchCase);
+      });
+    }
+  }]);
+
+  return Modal;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/js/Data.js":
+/*!************************!*\
+  !*** ./src/js/Data.js ***!
+  \************************/
+/*! exports provided: getDataCountries, getDataAll */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDataCountries", function() { return getDataCountries; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getDataAll", function() { return getDataAll; });
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__);
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -865,8 +976,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 var covidDataOfAllCountries = 'https://disease.sh/v3/covid-19/countries';
-var getData = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+var covidDataAtAll = 'https://disease.sh/v3/covid-19/all';
+var getDataCountries = /*#__PURE__*/function () {
+  var _a = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
     var response;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
@@ -887,20 +999,21 @@ var getData = /*#__PURE__*/function () {
     }, _callee);
   }));
 
-  return function getData() {
-    return _ref.apply(this, arguments);
-  };
-}(); // test
+  function a() {
+    return _a.apply(this, arguments);
+  }
 
-var postData = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+  return a;
+}();
+var getDataAll = /*#__PURE__*/function () {
+  var _b = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
     var response;
     return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.next = 2;
-            return fetch(covidDataOfAllCountries);
+            return fetch(covidDataAtAll);
 
           case 2:
             response = _context2.sent;
@@ -914,35 +1027,11 @@ var postData = /*#__PURE__*/function () {
     }, _callee2);
   }));
 
-  return function postData() {
-    return _ref2.apply(this, arguments);
-  };
-}();
-var resetData = /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3() {
-    var response;
-    return regeneratorRuntime.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            _context3.next = 2;
-            return fetch(covidDataOfAllCountries);
+  function b() {
+    return _b.apply(this, arguments);
+  }
 
-          case 2:
-            response = _context3.sent;
-            return _context3.abrupt("return", response.json());
-
-          case 4:
-          case "end":
-            return _context3.stop();
-        }
-      }
-    }, _callee3);
-  }));
-
-  return function resetData() {
-    return _ref3.apply(this, arguments);
-  };
+  return b;
 }();
 
 /***/ }),
@@ -980,7 +1069,7 @@ var Table = /*#__PURE__*/function () {
 
     _defineProperty(this, "createTable", function () {
       var tableContainer = document.querySelector('.table-container');
-      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('table', 'table table-hover table-dark', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('thead', 'thead', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('tr', null, [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('th', 'table-head', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-prev', '', null, ['data-toggle', 'prev']), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('span', 'table-title', "".concat(tableTitle[_this.currentCase])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-next', '', null, ['data-toggle', 'next'])], null, ['colspan', 3], ['data-case', "".concat(dataCases[_this.currentCase])])])])], tableContainer);
+      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('table', 'table table-hover table-dark', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('thead', 'thead', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('tr', null, [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('th', 'table-head', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-prev table-btn', '', null, ['data-toggle', 'prev']), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('span', 'table-title', "".concat(tableTitle[_this.currentCase])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-next table-btn', '', null, ['data-toggle', 'next'])], null, ['colspan', 3], ['data-case', "".concat(dataCases[_this.currentCase])])])])], tableContainer);
     });
 
     _defineProperty(this, "removeTableData", function () {
@@ -988,18 +1077,19 @@ var Table = /*#__PURE__*/function () {
       removeData.remove();
     });
 
-    _defineProperty(this, "filterSearch", function (event) {
-      var value = event.target.value.toLowerCase();
-
-      var filterArr = _this.dataCases.filter(function (el) {
-        return el.country.toLowerCase().includes(value);
+    _defineProperty(this, "filterData", function () {
+      return _this.data.filter(function (el) {
+        return el.country.toLowerCase().includes(_this.inputValue);
       });
+    });
 
-      console.log(filterArr);
+    _defineProperty(this, "filterSearch", function (event) {
+      _this.inputValue = event.target.value.toLowerCase();
+      console.log(_this.filterData());
 
       _this.removeTableData();
 
-      _this.setTableData(filterArr);
+      _this.setTableData(_this.filterData());
     });
 
     _defineProperty(this, "switchCase", function (event) {
@@ -1026,13 +1116,22 @@ var Table = /*#__PURE__*/function () {
 
       _this.removeTableData();
 
-      _this.setTableData();
+      if (_this.inputValue === '') {
+        _this.setTableData();
+      } else {
+        _this.setTableData(_this.filterData());
+      }
     });
 
-    this.dataCases = [];
-    this.searchEnter = '';
+    _defineProperty(this, "handleCountry", function (event) {
+      var currentTarget = event.currentTarget;
+      console.log(currentTarget.dataset.country);
+    });
+
+    this.data = [];
     this.currentCase = 0;
     this.isData = false;
+    this.inputValue = '';
   }
 
   _createClass(Table, [{
@@ -1041,19 +1140,16 @@ var Table = /*#__PURE__*/function () {
       var _this2 = this;
 
       var input = document.querySelector('.search-input');
-      Object(_Data__WEBPACK_IMPORTED_MODULE_1__["getData"])().then(function (data) {
-        // !TODO refactor
-        data.forEach(function (item) {
-          _this2.dataCases.push(item);
+      Object(_Data__WEBPACK_IMPORTED_MODULE_1__["getDataCountries"])().then(function (data) {
+        _this2.data = data;
 
-          if (_this2.dataCases.length > 0) {
-            input.removeAttribute('disabled');
-          }
-        });
+        if (_this2.data.length > 0) {
+          input.removeAttribute('disabled');
+        }
 
         _this2.createTable();
 
-        _this2.setTableData(_this2.dataCases);
+        _this2.setTableData(_this2.data);
 
         _this2.setListeners();
       })["catch"](function (err) {
@@ -1067,9 +1163,9 @@ var Table = /*#__PURE__*/function () {
       var _this3 = this;
 
       var input = document.querySelector('.search-input');
-      var btnsSwitch = document.querySelectorAll('.btn');
+      var toggleBtns = document.querySelectorAll('.table-btn');
       input.addEventListener('input', this.filterSearch);
-      btnsSwitch.forEach(function (btn) {
+      toggleBtns.forEach(function (btn) {
         return btn.addEventListener('click', _this3.switchCase);
       });
     }
@@ -1078,7 +1174,7 @@ var Table = /*#__PURE__*/function () {
     value: function setTableData() {
       var _this4 = this;
 
-      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.dataCases;
+      var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.data;
       var table = document.querySelector('.table');
       var tbody = Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('tbody', 'tbody', null, table);
       var sortData = this.sortData(data);
@@ -1211,12 +1307,15 @@ function create(el, className, child, parent) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _js_Table__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./js/Table */ "./src/js/Table.js");
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
-/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
+/* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _js_Table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/Table */ "./src/js/Table.js");
+/* harmony import */ var _js_Card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/Card */ "./src/js/Card.js");
 
 
-new _js_Table__WEBPACK_IMPORTED_MODULE_0__["default"]().handleMethods();
+
+new _js_Table__WEBPACK_IMPORTED_MODULE_1__["default"]().handleMethods();
+new _js_Card__WEBPACK_IMPORTED_MODULE_2__["default"]().handleMethods();
 
 /***/ }),
 

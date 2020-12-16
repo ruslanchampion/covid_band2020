@@ -1,5 +1,5 @@
 import create from './create';
-import { getData } from './Data';
+import { getDataCountries } from './Data';
 
 const tableTitle = [
 	'Cases by country',
@@ -12,27 +12,25 @@ const dataCases = ['cases', 'tests', 'deaths', 'recovered'];
 
 export default class Table {
 	constructor() {
-		this.dataCases = [];
-    this.searchEnter = '';
+		this.data = [];
     this.currentCase = 0;
     this.isData = false;
+    this.inputValue = '';
 	}
 
 	handleMethods() {
     const input = document.querySelector('.search-input');
     
-		getData().then((data) => {
-			// !TODO refactor
-			data.forEach((item) => {
-        this.dataCases.push(item);
-        if (this.dataCases.length > 0) {
-          input.removeAttribute('disabled');
-        }
-      });
+		getDataCountries().then((data) => {
+			this.data = data;
+
+      if (this.data.length > 0) {
+        input.removeAttribute('disabled');
+      }
 
 			this.createTable();
 
-			this.setTableData(this.dataCases);
+			this.setTableData(this.data);
 
 			this.setListeners();
 		}).catch(err => alert(err));
@@ -42,11 +40,11 @@ export default class Table {
 
   setListeners() {
     const input = document.querySelector('.search-input');
-    const btnsSwitch = document.querySelectorAll('.btn');
+    const toggleBtns = document.querySelectorAll('.table-btn');
 
     input.addEventListener('input', this.filterSearch);
       
-    btnsSwitch.forEach((btn) => btn.addEventListener('click', this.switchCase))
+    toggleBtns.forEach((btn) => btn.addEventListener('click', this.switchCase))
 
   }
 
@@ -63,9 +61,9 @@ export default class Table {
 							'th',
 							'table-head',
 							[
-								create('button', 'btn btn-prev', '',null,['data-toggle','prev']),
+								create('button', 'btn btn-prev table-btn', '',null,['data-toggle','prev']),
 								create('span', 'table-title', `${tableTitle[this.currentCase]}`),
-								create('button', 'btn btn-next', '',null,['data-toggle','next']),
+								create('button', 'btn btn-next table-btn', '',null,['data-toggle','next']),
 							],
 							null,
 							['colspan', 3],
@@ -78,7 +76,7 @@ export default class Table {
 		);
 	};
 
-	setTableData(data  = this.dataCases) {
+	setTableData(data  = this.data) {
 		const table = document.querySelector('.table');
 		const tbody = create('tbody', 'tbody', null, table);
 
@@ -109,23 +107,24 @@ export default class Table {
 		removeData.remove();
 	};
 
-	sortData(data) {
-		data.sort((a, b) => (a.[dataCases[this.currentCase]] < b.[dataCases[this.currentCase]] ? 1 : -1));
-		return data;
-	}
+	sortData (data) {
+    data.sort((a, b) => (a.[dataCases[this.currentCase]] < b.[dataCases[this.currentCase]] ? 1 : -1));
+    return data;
+  }
+  
+  filterData = () => this.data.filter((el) =>
+    el.country.toLowerCase().includes(this.inputValue)
+  );
+
+  
 
 	filterSearch = (event) => {
+		this.inputValue = event.target.value.toLowerCase();
 
-		const value = event.target.value.toLowerCase();
-
-		const filterArr = this.dataCases.filter((el) =>
-			el.country.toLowerCase().includes(value)
-		);
-
-		console.log(filterArr);
+		console.log(this.filterData());
 
 		this.removeTableData();
-		this.setTableData(filterArr);
+		this.setTableData(this.filterData());
   };
   
   switchCase = (event) => {
@@ -149,7 +148,17 @@ export default class Table {
     }
     title.innerHTML = `${tableTitle[this.currentCase]}`
     this.removeTableData();
-    this.setTableData();
+
+    if (this.inputValue === '') {
+      this.setTableData();
+    }else {
+      this.setTableData(this.filterData());
+    }
+    
   }
 
+  handleCountry = (event) => {
+    const {currentTarget} = event;
+    console.log(currentTarget.dataset.country);
+  }
 }
