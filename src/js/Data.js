@@ -7,6 +7,7 @@ export const getData = async function () {
 	return response.json();
 };
 
+// test
 export const postData = async function () {
 	const response = await fetch(covidDataOfAllCountries);
 	return response.json();
