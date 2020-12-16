@@ -882,7 +882,7 @@ var Modal = /*#__PURE__*/function () {
 
     _defineProperty(this, "changeNumberInfo", function () {
       var infoContainer = document.querySelector('.info-container');
-      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'info-numbers', "".concat(_this.data[categoryOfInfo[_this.currentCase]]), infoContainer);
+      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'info-numbers', _this.changeDisplayOfNumbers(_this.data[categoryOfInfo[_this.currentCase]]), infoContainer);
     });
 
     _defineProperty(this, "removeDataInfo", function () {
@@ -914,6 +914,12 @@ var Modal = /*#__PURE__*/function () {
       _this.removeDataInfo();
 
       _this.changeNumberInfo();
+    });
+
+    _defineProperty(this, "changeDisplayOfNumbers", function (number) {
+      return number.toLocaleString('en', {
+        maximumFractionDigits: 0
+      });
     });
 
     this.data = [];
@@ -1089,7 +1095,11 @@ var Table = /*#__PURE__*/function () {
 
       _this.removeTableData();
 
+      _this.removeListeners();
+
       _this.setTableData(_this.filterData());
+
+      _this.setListeners();
     });
 
     _defineProperty(this, "switchCase", function (event) {
@@ -1116,16 +1126,34 @@ var Table = /*#__PURE__*/function () {
 
       _this.removeTableData();
 
+      _this.removeListeners();
+
       if (_this.inputValue === '') {
         _this.setTableData();
       } else {
         _this.setTableData(_this.filterData());
       }
+
+      _this.setListeners();
     });
 
     _defineProperty(this, "handleCountry", function (event) {
       var currentTarget = event.currentTarget;
       console.log(currentTarget.dataset.country);
+    });
+
+    _defineProperty(this, "changeDisplayOfNumbers", function (number) {
+      return number.toLocaleString('en', {
+        maximumFractionDigits: 0
+      });
+    });
+
+    _defineProperty(this, "isBelarus", function (src) {
+      if (src.includes('by.png')) {
+        return 'img/by.png';
+      }
+
+      return src;
     });
 
     this.data = [];
@@ -1164,15 +1192,35 @@ var Table = /*#__PURE__*/function () {
 
       var input = document.querySelector('.search-input');
       var toggleBtns = document.querySelectorAll('.table-btn');
+      var statCountries = document.querySelectorAll('.statistic-country');
       input.addEventListener('input', this.filterSearch);
       toggleBtns.forEach(function (btn) {
         return btn.addEventListener('click', _this3.switchCase);
+      });
+      statCountries.forEach(function (country) {
+        country.addEventListener('click', _this3.handleCountry);
+      });
+    }
+  }, {
+    key: "removeListeners",
+    value: function removeListeners() {
+      var _this4 = this;
+
+      var input = document.querySelector('.search-input');
+      var toggleBtns = document.querySelectorAll('.table-btn');
+      var statCountries = document.querySelectorAll('.statistic-country');
+      input.removeEventListener('input', this.filterSearch);
+      toggleBtns.forEach(function (btn) {
+        return btn.removeEventListener('click', _this4.switchCase);
+      });
+      statCountries.forEach(function (country) {
+        country.removeEventListener('click', _this4.handleCountry);
       });
     }
   }, {
     key: "setTableData",
     value: function setTableData() {
-      var _this4 = this;
+      var _this5 = this;
 
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.data;
       var table = document.querySelector('.table');
@@ -1180,16 +1228,16 @@ var Table = /*#__PURE__*/function () {
       var sortData = this.sortData(data);
       console.log(sortData);
       sortData.forEach(function (element) {
-        Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('tr', 'statistic-country', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('td', 'count-of-cases', "".concat(element[dataCases[_this4.currentCase]])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('td', 'country', "".concat(element.country)), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('td', null, [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('img', 'country-flag', null, null, ['src', "".concat(element.countryInfo.flag)])])], tbody, ['data-country', "".concat(element.country)]);
+        Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('tr', 'statistic-country', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('td', 'count-of-cases', _this5.changeDisplayOfNumbers(element[dataCases[_this5.currentCase]])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('td', 'country', "".concat(element.country)), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('td', null, [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('img', 'country-flag', null, null, ['src', "".concat(_this5.isBelarus(element.countryInfo.flag))])])], tbody, ['data-country', "".concat(element.country)]);
       });
     }
   }, {
     key: "sortData",
     value: function sortData(data) {
-      var _this5 = this;
+      var _this6 = this;
 
       data.sort(function (a, b) {
-        return a[dataCases[_this5.currentCase]] < b[dataCases[_this5.currentCase]] ? 1 : -1;
+        return a[dataCases[_this6.currentCase]] < b[dataCases[_this6.currentCase]] ? 1 : -1;
       });
       return data;
     }

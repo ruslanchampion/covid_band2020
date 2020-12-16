@@ -56,7 +56,7 @@ export default class Modal {
 		create(
 			'div',
 			'info-numbers',
-			`${this.data.[categoryOfInfo[this.currentCase]]}`,
+			this.changeDisplayOfNumbers(this.data.[categoryOfInfo[this.currentCase]]),
 			infoContainer
 		);
 	};
@@ -86,5 +86,7 @@ export default class Modal {
     title.innerHTML = `Global ${categoryOfInfo[this.currentCase]}`
     this.removeDataInfo();
     this.changeNumberInfo()
-	};
+  };
+  
+  changeDisplayOfNumbers = (number) => number.toLocaleString('en',{ maximumFractionDigits: 0});
 }

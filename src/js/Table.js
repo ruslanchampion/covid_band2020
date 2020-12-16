@@ -41,11 +41,29 @@ export default class Table {
   setListeners() {
     const input = document.querySelector('.search-input');
     const toggleBtns = document.querySelectorAll('.table-btn');
+    const statCountries = document.querySelectorAll('.statistic-country');
 
     input.addEventListener('input', this.filterSearch);
       
-    toggleBtns.forEach((btn) => btn.addEventListener('click', this.switchCase))
+    toggleBtns.forEach((btn) => btn.addEventListener('click', this.switchCase));
 
+    statCountries.forEach((country) => {
+      country.addEventListener('click', this.handleCountry);
+    })
+  }
+
+  removeListeners() {
+    const input = document.querySelector('.search-input');
+    const toggleBtns = document.querySelectorAll('.table-btn');
+    const statCountries = document.querySelectorAll('.statistic-country');
+
+    input.removeEventListener('input', this.filterSearch);
+      
+    toggleBtns.forEach((btn) => btn.removeEventListener('click', this.switchCase));
+
+    statCountries.forEach((country) => {
+      country.removeEventListener('click', this.handleCountry);
+    })
   }
 
 	createTable = () => {
@@ -88,12 +106,12 @@ export default class Table {
 				'tr',
 				'statistic-country',
 				[
-					create('td', 'count-of-cases', `${element.[dataCases[this.currentCase]]}`),
+					create('td', 'count-of-cases', this.changeDisplayOfNumbers(element.[dataCases[this.currentCase]])),
 					create('td', 'country', `${element.country}`),
 					create('td', null, [
 						create('img', 'country-flag', null, null, [
 							'src',
-							`${element.countryInfo.flag}`,
+							`${this.isBelarus(element.countryInfo.flag)}`,
 						]),
 					]),
 				],
@@ -123,8 +141,11 @@ export default class Table {
 
 		console.log(this.filterData());
 
-		this.removeTableData();
-		this.setTableData(this.filterData());
+    this.removeTableData();
+    this.removeListeners();
+
+    this.setTableData(this.filterData());
+    this.setListeners();
   };
   
   switchCase = (event) => {
@@ -146,19 +167,32 @@ export default class Table {
         this.currentCase = tableTitle.length - 1;
       }
     }
+
     title.innerHTML = `${tableTitle[this.currentCase]}`
+
     this.removeTableData();
+    this.removeListeners();
 
     if (this.inputValue === '') {
       this.setTableData();
     }else {
       this.setTableData(this.filterData());
     }
-    
+
+    this.setListeners();
   }
 
   handleCountry = (event) => {
     const {currentTarget} = event;
     console.log(currentTarget.dataset.country);
+  }
+
+  changeDisplayOfNumbers = (number) => number.toLocaleString('en',{ maximumFractionDigits: 0});
+
+  isBelarus = (src) => {
+    if (src.includes('by.png')) {
+      return 'img/by.png'
+    }
+    return src
   }
 }
