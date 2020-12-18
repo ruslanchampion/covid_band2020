@@ -1,11 +1,8 @@
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable react/jsx-closing-tag-location */
-/* eslint-disable no-undef */
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable react/jsx-filename-extension */
-// eslint-disable-next-line import/no-unresolved
+/* eslint-disable */
+import React from 'react';
+import ReactDOM from 'react-dom';
 import './map/App.css';
-
+import { MenuItem, FormControl, Select } from "@material-ui/core";
 function App() {
   return React.createElement(
     'div',
@@ -14,6 +11,37 @@ function App() {
       'h1',
       null,
       'HI'
+    ),
+    React.createElement(
+      FormControl,
+      { className: 'app__dropdown' },
+      React.createElement(
+        Select,
+        {
+          variant: 'outlined',
+          value: 'abc'
+        },
+        React.createElement(
+          MenuItem,
+          { value: 'worldwide' },
+          'Worldwide'
+        ),
+        React.createElement(
+          MenuItem,
+          { value: 'worldwide' },
+          'Option two'
+        ),
+        React.createElement(
+          MenuItem,
+          { value: 'worldwide' },
+          'Option 3'
+        ),
+        React.createElement(
+          MenuItem,
+          { value: 'worldwide' },
+          'otion 4'
+        )
+      )
     )
   );
 }
