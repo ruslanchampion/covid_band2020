@@ -10,61 +10,65 @@ const tableTitle = [
 
 const dataCases = ['cases', 'tests', 'deaths', 'recovered'];
 
+const colorOfNumbers = ['red', 'aqua', 'black', 'green'];
+
 export default class Table {
 	constructor() {
 		this.data = [];
-    this.currentCase = 0;
-    this.isData = false;
-    this.inputValue = '';
+		this.currentCase = 0;
+		this.isData = false;
+		this.inputValue = '';
 	}
 
 	handleMethods() {
-    const input = document.querySelector('.search-input');
-    
-		getDataCountries().then((data) => {
-			this.data = data;
+		const input = document.querySelector('.search-input');
 
-      if (this.data.length > 0) {
-        input.removeAttribute('disabled');
-      }
+		getDataCountries()
+			.then((data) => {
+				this.data = data;
 
-			this.createTable();
+				if (this.data.length > 0) {
+					input.removeAttribute('disabled');
+				}
 
-			this.setTableData(this.data);
+				this.createTable();
 
-			this.setListeners();
-		}).catch(err => alert(err));
+				this.setTableData(this.data);
+
+				this.setListeners();
+			})
+			.catch((err) => alert(err));
 
 		return this;
 	}
 
-  setListeners() {
-    const input = document.querySelector('.search-input');
-    const toggleBtns = document.querySelectorAll('.table-btn');
-    const statCountries = document.querySelectorAll('.statistic-country');
+	setListeners() {
+		const input = document.querySelector('.search-input');
+		const toggleBtns = document.querySelectorAll('.table-btn');
+		const statCountries = document.querySelectorAll('.statistic-country');
 
-    input.addEventListener('input', this.filterSearch);
-      
-    toggleBtns.forEach((btn) => btn.addEventListener('click', this.switchCase));
+		input.addEventListener('input', this.filterSearch);
 
-    statCountries.forEach((country) => {
-      country.addEventListener('click', this.handleCountry);
-    })
-  }
+		toggleBtns.forEach((btn) => btn.addEventListener('click', this.switchCase));
 
-  removeListeners() {
-    const input = document.querySelector('.search-input');
-    const toggleBtns = document.querySelectorAll('.table-btn');
-    const statCountries = document.querySelectorAll('.statistic-country');
+		statCountries.forEach((country) => {
+			country.addEventListener('click', this.handleCountry);
+		});
+	}
 
-    input.removeEventListener('input', this.filterSearch);
-      
-    toggleBtns.forEach((btn) => btn.removeEventListener('click', this.switchCase));
+	removeListeners() {
+		const input = document.querySelector('.search-input');
+		const toggleBtns = document.querySelectorAll('.table-btn');
+		const statCountries = document.querySelectorAll('.statistic-country');
 
-    statCountries.forEach((country) => {
-      country.removeEventListener('click', this.handleCountry);
-    })
-  }
+		input.removeEventListener('input', this.filterSearch);
+
+		toggleBtns.forEach((btn) => btn.removeEventListener('click', this.switchCase));
+
+		statCountries.forEach((country) => {
+			country.removeEventListener('click', this.handleCountry);
+		});
+	}
 
 	createTable = () => {
 		const tableContainer = document.querySelector('.table-container');
@@ -79,9 +83,9 @@ export default class Table {
 							'th',
 							'table-head',
 							[
-								create('button', 'btn btn-prev table-btn', '',null,['data-toggle','prev']),
+								create('button', 'btn btn-prev table-btn', '', null, ['data-toggle', 'prev']),
 								create('span', 'table-title', `${tableTitle[this.currentCase]}`),
-								create('button', 'btn btn-next table-btn', '',null,['data-toggle','next']),
+								create('button', 'btn btn-next table-btn', '', null, ['data-toggle', 'next']),
 							],
 							null,
 							['colspan', 3],
@@ -94,7 +98,7 @@ export default class Table {
 		);
 	};
 
-	setTableData(data  = this.data) {
+	setTableData(data = this.data) {
 		const table = document.querySelector('.table');
 		const tbody = create('tbody', 'tbody', null, table);
 
@@ -106,7 +110,13 @@ export default class Table {
 				'tr',
 				'statistic-country',
 				[
-					create('td', 'count-of-cases', this.changeDisplayOfNumbers(element.[dataCases[this.currentCase]])),
+					create(
+						'td',
+						'count-of-cases',
+						this.changeDisplayOfNumbers(element[dataCases[this.currentCase]]),
+						null,
+						['data-color', `${colorOfNumbers[this.currentCase]}`]
+					),
 					create('td', 'country', `${element.country}`),
 					create('td', null, [
 						create('img', 'country-flag', null, null, [
@@ -115,7 +125,8 @@ export default class Table {
 						]),
 					]),
 				],
-				tbody,['data-country',`${element.country}`]
+				tbody,
+				['data-country', `${element.country}`]
 			);
 		});
 	}
@@ -125,74 +136,71 @@ export default class Table {
 		removeData.remove();
 	};
 
-	sortData (data) {
-    data.sort((a, b) => (a.[dataCases[this.currentCase]] < b.[dataCases[this.currentCase]] ? 1 : -1));
-    return data;
-  }
-  
-  filterData = () => this.data.filter((el) =>
-    el.country.toLowerCase().includes(this.inputValue)
-  );
+	sortData(data) {
+		data.sort((a, b) => (a[dataCases[this.currentCase]] < b[dataCases[this.currentCase]] ? 1 : -1));
+		return data;
+	}
 
-  
+	filterData = () => this.data.filter((el) => el.country.toLowerCase().includes(this.inputValue));
 
 	filterSearch = (event) => {
 		this.inputValue = event.target.value.toLowerCase();
 
 		console.log(this.filterData());
 
-    this.removeTableData();
-    this.removeListeners();
+		this.removeTableData();
+		this.removeListeners();
 
-    this.setTableData(this.filterData());
-    this.setListeners();
-  };
-  
-  switchCase = (event) => {
-    const title = document.querySelector('.table-title');
+		this.setTableData(this.filterData());
+		this.setListeners();
+	};
 
-    const {currentTarget} = event;
-    console.log(currentTarget.dataset.toggle);
+	switchCase = (event) => {
+		const title = document.querySelector('.table-title');
 
-    const value = currentTarget.dataset.toggle;
+		const { currentTarget } = event;
+		console.log(currentTarget.dataset.toggle);
 
-    if (value === 'next') {
-      this.currentCase += 1;
-      if (this.currentCase === tableTitle.length) {
-        this.currentCase = 0;
-      }
-    }else {
-      this.currentCase -= 1;
-      if (this.currentCase === -1) {
-        this.currentCase = tableTitle.length - 1;
-      }
-    }
+		const value = currentTarget.dataset.toggle;
 
-    title.innerHTML = `${tableTitle[this.currentCase]}`
+		if (value === 'next') {
+			this.currentCase += 1;
+			if (this.currentCase === tableTitle.length) {
+				this.currentCase = 0;
+			}
+		} else {
+			this.currentCase -= 1;
+			if (this.currentCase === -1) {
+				this.currentCase = tableTitle.length - 1;
+			}
+		}
 
-    this.removeTableData();
-    this.removeListeners();
+		title.innerHTML = `${tableTitle[this.currentCase]}`;
 
-    if (this.inputValue === '') {
-      this.setTableData();
-    }else {
-      this.setTableData(this.filterData());
-    }
+		this.removeTableData();
+		this.removeListeners();
 
-    this.setListeners();
-  }
+		if (this.inputValue === '') {
+			this.setTableData();
+		} else {
+			this.setTableData(this.filterData());
+		}
 
-  handleCountry = (event) => {
-    const {currentTarget} = event;
-    console.log(currentTarget.dataset.country);
-  }
+		this.setListeners();
+	};
 
-  changeDisplayOfNumbers = (number) => number.toLocaleString('en',{ maximumFractionDigits: 0});
+	handleCountry = (event) => {
+		const { currentTarget } = event;
+		const data = this.data.find((item) => item.country === currentTarget.dataset.country);
+		console.log(data);
+	};
 
-  isBelarus = (src) => {
-    if (src.includes('by.png')) {
-      return 'img/by.png'
-    }
-    return src
-  }
+	changeDisplayOfNumbers = (number) => number.toLocaleString();
+
+	isBelarus = (src) => {
+		if (src.includes('by.png')) {
+			return 'img/by.png';
+		}
+		return src;
+	};
 }

@@ -29,26 +29,26 @@ body {
   overflow-x: hidden;
 }
 
+.col-10 {
+  max-width: 100%;
+}
+
 .table-container {
-  font-size: 2rem;
+  font-size: 1.2rem;
   display: flex;
   flex-direction: column;
-  max-width: 500px;
-  width: 100%;
   border: 1px solid black;
-  margin: 20px auto;
 
   .table {
-    max-width: 450px;
-    margin: 10px auto;
-
     .thead {
       display: flex;
       justify-content: center;
+      padding: 10px 0;
     }
+
     .tbody {
       display: block;
-      max-height: 600px;
+      max-height: 440px;
       height: auto;
       overflow: scroll;
       overflow-x: hidden;
@@ -78,7 +78,7 @@ body {
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      font-size: 3rem;
+      font-size: 1.5rem;
       margin: 0;
       border: none;
     }
@@ -88,21 +88,23 @@ body {
     }
 
     .count-of-cases {
-      font-size: 2.4rem;
-      color: crimson;
-      padding-left: 30px;
+      font-size: 1.7rem;
+      font-weight: bold;
+      // color: crimson;
+      padding-left: 10px;
     }
     .country {
-      width: 45%;
+      vertical-align: inherit;
+      text-align: center;
     }
     .country-flag {
-      width: 50px;
+      width: 30px;
     }
   }
 
   .search-input {
-    padding: 15px 20px;
-    font-size: 2rem;
+    padding: 10px 10px;
+    font-size: 1.3rem;
     margin: 5px;
   }
 }
@@ -120,30 +122,28 @@ body {
 }
 .btn-prev {
   border-style: solid;
-  border-width: 12.5px 25px 12.5px 0;
+  border-width: 10px 20px 10px 0;
   border-color: transparent #007bff transparent transparent;
-  margin-right: 30px;
+  margin-right: 20px;
 }
 .btn-next {
   border-style: solid;
-  border-width: 12.5px 0 12.5px 25px;
+  border-width: 10px 0 10px 20px;
   border-color: transparent transparent transparent #007bff;
-  margin-left: 30px;
+  margin-left: 20px;
 }
 
 .info-container {
-  width: 300px;
-  height: 300px;
-  margin: 10px auto;
+  // margin: 10px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 3px solid crimson;
-  font-size: 3rem;
+  border: 1px solid crimson;
+  font-size: 2rem;
 
   .title {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -157,7 +157,20 @@ body {
   }
 
   .info-numbers {
-    font-size: 5rem;
-    color: crimson;
+    font-size: 2rem;
+    font-weight: bold;
   }
+}
+
+[data-color="red"] {
+  color: red;
+}
+[data-color="black"] {
+  color: black;
+}
+[data-color="aqua"] {
+  color: aqua;
+}
+[data-color="green"] {
+  color: green;
 }

@@ -854,7 +854,7 @@ try {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Modal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Card; });
 /* harmony import */ var _create__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./create */ "./src/js/create.js");
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Data */ "./src/js/Data.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -868,12 +868,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var categoryOfInfo = ['cases', 'deaths', 'recovered', 'tests'];
+var colorOfNumbers = ['red', 'aqua', 'black', 'green'];
 
-var Modal = /*#__PURE__*/function () {
-  function Modal() {
+var Card = /*#__PURE__*/function () {
+  function Card() {
     var _this = this;
 
-    _classCallCheck(this, Modal);
+    _classCallCheck(this, Card);
 
     _defineProperty(this, "createCard", function () {
       var infoContainer = document.querySelector('.info-container');
@@ -882,7 +883,7 @@ var Modal = /*#__PURE__*/function () {
 
     _defineProperty(this, "changeNumberInfo", function () {
       var infoContainer = document.querySelector('.info-container');
-      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'info-numbers', _this.changeDisplayOfNumbers(_this.data[categoryOfInfo[_this.currentCase]]), infoContainer);
+      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'info-numbers', _this.changeDisplayOfNumbers(_this.data[categoryOfInfo[_this.currentCase]]), infoContainer, ['data-color', "".concat(colorOfNumbers[_this.currentCase])]);
     });
 
     _defineProperty(this, "removeDataInfo", function () {
@@ -926,7 +927,7 @@ var Modal = /*#__PURE__*/function () {
     this.currentCase = 0;
   }
 
-  _createClass(Modal, [{
+  _createClass(Card, [{
     key: "handleMethods",
     value: function handleMethods() {
       var _this2 = this;
@@ -956,7 +957,7 @@ var Modal = /*#__PURE__*/function () {
     }
   }]);
 
-  return Modal;
+  return Card;
 }();
 
 
@@ -1066,6 +1067,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var tableTitle = ['Cases by country', 'Tests by country', 'Death by country', 'Recovered by country'];
 var dataCases = ['cases', 'tests', 'deaths', 'recovered'];
+var colorOfNumbers = ['red', 'aqua', 'black', 'green'];
 
 var Table = /*#__PURE__*/function () {
   function Table() {
@@ -1139,13 +1141,16 @@ var Table = /*#__PURE__*/function () {
 
     _defineProperty(this, "handleCountry", function (event) {
       var currentTarget = event.currentTarget;
-      console.log(currentTarget.dataset.country);
+
+      var data = _this.data.find(function (item) {
+        return item.country === currentTarget.dataset.country;
+      });
+
+      console.log(data);
     });
 
     _defineProperty(this, "changeDisplayOfNumbers", function (number) {
-      return number.toLocaleString('en', {
-        maximumFractionDigits: 0
-      });
+      return number.toLocaleString();
     });
 
     _defineProperty(this, "isBelarus", function (src) {
@@ -1228,7 +1233,7 @@ var Table = /*#__PURE__*/function () {
       var sortData = this.sortData(data);
       console.log(sortData);
       sortData.forEach(function (element) {
-        Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('tr', 'statistic-country', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('td', 'count-of-cases', _this5.changeDisplayOfNumbers(element[dataCases[_this5.currentCase]])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('td', 'country', "".concat(element.country)), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('td', null, [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('img', 'country-flag', null, null, ['src', "".concat(_this5.isBelarus(element.countryInfo.flag))])])], tbody, ['data-country', "".concat(element.country)]);
+        Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('tr', 'statistic-country', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('td', 'count-of-cases', _this5.changeDisplayOfNumbers(element[dataCases[_this5.currentCase]]), null, ['data-color', "".concat(colorOfNumbers[_this5.currentCase])]), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('td', 'country', "".concat(element.country)), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('td', null, [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('img', 'country-flag', null, null, ['src', "".concat(_this5.isBelarus(element.countryInfo.flag))])])], tbody, ['data-country', "".concat(element.country)]);
       });
     }
   }, {

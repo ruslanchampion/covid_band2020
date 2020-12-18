@@ -2,8 +2,9 @@ import create from './create';
 import { getDataAll } from './Data';
 
 const categoryOfInfo = ['cases', 'deaths', 'recovered', 'tests'];
+const colorOfNumbers = ['red', 'aqua', 'black', 'green'];
 
-export default class Modal {
+export default class Card {
 	constructor() {
 		this.data = [];
 		this.currentCase = 0;
@@ -37,15 +38,9 @@ export default class Modal {
 			'div',
 			'title',
 			[
-				create('button', 'btn btn-prev card-btn', null, null, [
-					'data-toggle',
-					'prev',
-				]),
+				create('button', 'btn btn-prev card-btn', null, null, ['data-toggle', 'prev']),
 				create('div', 'title-text', `Global ${categoryOfInfo[this.currentCase]}`),
-				create('button', 'btn btn-next card-btn', null, null, [
-					'data-toggle',
-					'next',
-				]),
+				create('button', 'btn btn-next card-btn', null, null, ['data-toggle', 'next']),
 			],
 			infoContainer
 		);
@@ -56,8 +51,9 @@ export default class Modal {
 		create(
 			'div',
 			'info-numbers',
-			this.changeDisplayOfNumbers(this.data.[categoryOfInfo[this.currentCase]]),
-			infoContainer
+			this.changeDisplayOfNumbers(this.data[categoryOfInfo[this.currentCase]]),
+			infoContainer,
+			['data-color', `${colorOfNumbers[this.currentCase]}`]
 		);
 	};
 
@@ -69,7 +65,7 @@ export default class Modal {
 	switchCase = (event) => {
 		const { currentTarget } = event;
 		const value = currentTarget.dataset.toggle;
-    const title = document.querySelector('.title-text');
+		const title = document.querySelector('.title-text');
 
 		if (value === 'next') {
 			this.currentCase += 1;
@@ -81,12 +77,12 @@ export default class Modal {
 			if (this.currentCase === -1) {
 				this.currentCase = categoryOfInfo.length - 1;
 			}
-    }
-    
-    title.innerHTML = `Global ${categoryOfInfo[this.currentCase]}`
-    this.removeDataInfo();
-    this.changeNumberInfo()
-  };
-  
-  changeDisplayOfNumbers = (number) => number.toLocaleString('en',{ maximumFractionDigits: 0});
+		}
+
+		title.innerHTML = `Global ${categoryOfInfo[this.currentCase]}`;
+		this.removeDataInfo();
+		this.changeNumberInfo();
+	};
+
+	changeDisplayOfNumbers = (number) => number.toLocaleString('en', { maximumFractionDigits: 0 });
 }
