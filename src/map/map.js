@@ -3,7 +3,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable react/jsx-filename-extension */
-import './App.css';
+// eslint-disable-next-line import/no-unresolved
+import './map/App.css';
 
 function App() {
   return (
