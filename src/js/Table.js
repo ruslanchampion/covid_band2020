@@ -1,5 +1,6 @@
 import create from './create';
 import { getDataCountries } from './Data';
+import Card from './Card';
 
 const tableTitle = [
 	'Cases by country',
@@ -18,6 +19,7 @@ export default class Table {
 		this.currentCase = 0;
 		this.isData = false;
 		this.inputValue = '';
+		this.card = new Card();
 	}
 
 	handleMethods() {
@@ -38,6 +40,8 @@ export default class Table {
 				this.setListeners();
 			})
 			.catch((err) => alert(err));
+
+		this.card.handleMethods();
 
 		return this;
 	}
@@ -75,22 +79,13 @@ export default class Table {
 
 		create(
 			'table',
-			'table table-hover table-dark',
+			'table-1 table-hover table-dark',
 			[
 				create('thead', 'thead', [
 					create('tr', null, [
-						create(
-							'th',
-							'table-head',
-							[
-								create('button', 'btn btn-prev table-btn', '', null, ['data-toggle', 'prev']),
-								create('span', 'table-title', `${tableTitle[this.currentCase]}`),
-								create('button', 'btn btn-next table-btn', '', null, ['data-toggle', 'next']),
-							],
-							null,
-							['colspan', 3],
-							['data-case', `${dataCases[this.currentCase]}`]
-						),
+						create('button', 'btn btn-prev table-btn', '', null, ['data-toggle', 'prev']),
+						create('span', 'table-title', `${tableTitle[this.currentCase]}`),
+						create('button', 'btn btn-next table-btn', '', null, ['data-toggle', 'next']),
 					]),
 				]),
 			],
@@ -99,7 +94,7 @@ export default class Table {
 	};
 
 	setTableData(data = this.data) {
-		const table = document.querySelector('.table');
+		const table = document.querySelector('.table-1');
 		const tbody = create('tbody', 'tbody', null, table);
 
 		const sortData = this.sortData(data);
@@ -193,6 +188,9 @@ export default class Table {
 		const { currentTarget } = event;
 		const data = this.data.find((item) => item.country === currentTarget.dataset.country);
 		console.log(data);
+
+		this.card.removeDataInfo();
+		this.card.changeNumberInfo(data);
 	};
 
 	changeDisplayOfNumbers = (number) => number.toLocaleString();

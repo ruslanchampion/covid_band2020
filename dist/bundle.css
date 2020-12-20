@@ -24,45 +24,51 @@ body {
   display: flex;
   flex-direction: column;
   border: 1px solid black; }
-  .table-container .table .thead {
+  .table-container .table-1 .thead {
     display: flex;
     justify-content: center;
     padding: 10px 0; }
-  .table-container .table .tbody {
+    .table-container .table-1 .thead .table-head {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin: 0;
+      border: none; }
+  .table-container .table-1 .tbody {
     display: block;
     max-height: 440px;
     height: auto;
     overflow: scroll;
     overflow-x: hidden; }
-    .table-container .table .tbody::-webkit-scrollbar {
+    .table-container .table-1 .tbody .statistic-country {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-right: 10px; }
+    .table-container .table-1 .tbody::-webkit-scrollbar {
       width: 10px; }
-    .table-container .table .tbody::-webkit-scrollbar-track {
+    .table-container .table-1 .tbody::-webkit-scrollbar-track {
       background: #f1f1f1;
       box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
       border-radius: 20px; }
-    .table-container .table .tbody::-webkit-scrollbar-thumb {
+    .table-container .table-1 .tbody::-webkit-scrollbar-thumb {
       background: #888;
       border-radius: 20px; }
-    .table-container .table .tbody::-webkit-scrollbar-thumb:hover {
+    .table-container .table-1 .tbody::-webkit-scrollbar-thumb:hover {
       background: #555; }
-  .table-container .table .table-head {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    margin: 0;
-    border: none; }
-  .table-container .table .statistic-country {
+  .table-container .table-1 .statistic-country {
     cursor: pointer; }
-  .table-container .table .count-of-cases {
+  .table-container .table-1 .count-of-cases {
     font-size: 1.7rem;
     font-weight: bold;
     padding-left: 10px; }
-  .table-container .table .country {
+  .table-container .table-1 .country {
     vertical-align: inherit;
     text-align: center; }
-  .table-container .table .country-flag {
+  .table-container .table-1 .country-flag {
     width: 30px; }
   .table-container .search-input {
     padding: 10px 10px;
@@ -121,6 +127,18 @@ body {
 
 [data-color="green"] {
   color: green; }
+
+.container {
+  display: flex;
+  height: 500px; }
+
+.row {
+  flex: 1; }
+
+.col,
+[class*="col-"] {
+  display: flex;
+  border: 1px solid black; }
 
 
 /*# sourceMappingURL=bundle.css.map*/

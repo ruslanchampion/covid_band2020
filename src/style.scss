@@ -39,11 +39,21 @@ body {
   flex-direction: column;
   border: 1px solid black;
 
-  .table {
+  .table-1 {
     .thead {
       display: flex;
       justify-content: center;
       padding: 10px 0;
+
+      .table-head {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin: 0;
+        border: none;
+      }
     }
 
     .tbody {
@@ -52,6 +62,14 @@ body {
       height: auto;
       overflow: scroll;
       overflow-x: hidden;
+
+      .statistic-country {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 10px;
+      }
 
       &::-webkit-scrollbar {
         width: 10px;
@@ -71,16 +89,6 @@ body {
       &::-webkit-scrollbar-thumb:hover {
         background: #555;
       }
-    }
-
-    .table-head {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      margin: 0;
-      border: none;
     }
 
     .statistic-country {
@@ -174,3 +182,20 @@ body {
 [data-color="green"] {
   color: green;
 }
+
+//  ===bootstrap-grid  ===
+.container {
+  display: flex;
+  height: 500px;
+}
+
+.row {
+  flex: 1;
+}
+
+.col,
+[class*="col-"] {
+  display: flex;
+  border: 1px solid black;
+}
+// === /bootstrap-grid ===

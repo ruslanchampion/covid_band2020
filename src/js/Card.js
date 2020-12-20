@@ -7,7 +7,8 @@ const colorOfNumbers = ['red', 'aqua', 'black', 'green'];
 export default class Card {
 	constructor() {
 		this.data = [];
-		this.currentCase = 0;
+		this.currentNumberOfCategory = 0;
+		this.selectedCountry = {};
 	}
 
 	handleMethods() {
@@ -16,7 +17,7 @@ export default class Card {
 				this.data = data;
 
 				this.createCard();
-				this.changeNumberInfo();
+				this.changeNumberInfo(this.data);
 
 				this.setListeners();
 			})
@@ -39,21 +40,29 @@ export default class Card {
 			'title',
 			[
 				create('button', 'btn btn-prev card-btn', null, null, ['data-toggle', 'prev']),
-				create('div', 'title-text', `Global ${categoryOfInfo[this.currentCase]}`),
+				create('div', 'title-text', `Global ${categoryOfInfo[this.currentNumberOfCategory]}`),
 				create('button', 'btn btn-next card-btn', null, null, ['data-toggle', 'next']),
 			],
 			infoContainer
 		);
 	};
+	// !TODO change name of method
 
-	changeNumberInfo = () => {
+	changeNumberInfo = (data) => {
 		const infoContainer = document.querySelector('.info-container');
+
+		if (data) {
+			this.selectedCountry = data;
+		}
+
 		create(
 			'div',
 			'info-numbers',
-			this.changeDisplayOfNumbers(this.data[categoryOfInfo[this.currentCase]]),
+			this.changeDisplayOfNumbers(
+				this.selectedCountry[categoryOfInfo[this.currentNumberOfCategory]]
+			),
 			infoContainer,
-			['data-color', `${colorOfNumbers[this.currentCase]}`]
+			['data-color', `${colorOfNumbers[this.currentNumberOfCategory]}`]
 		);
 	};
 
@@ -68,21 +77,22 @@ export default class Card {
 		const title = document.querySelector('.title-text');
 
 		if (value === 'next') {
-			this.currentCase += 1;
-			if (this.currentCase === categoryOfInfo.length) {
-				this.currentCase = 0;
+			this.currentNumberOfCategory += 1;
+			if (this.currentNumberOfCategory === categoryOfInfo.length) {
+				this.currentNumberOfCategory = 0;
 			}
 		} else {
-			this.currentCase -= 1;
-			if (this.currentCase === -1) {
-				this.currentCase = categoryOfInfo.length - 1;
+			this.currentNumberOfCategory -= 1;
+			if (this.currentNumberOfCategory === -1) {
+				this.currentNumberOfCategory = categoryOfInfo.length - 1;
 			}
 		}
 
-		title.innerHTML = `Global ${categoryOfInfo[this.currentCase]}`;
+		title.innerHTML = `Global ${categoryOfInfo[this.currentNumberOfCategory]}`;
+
 		this.removeDataInfo();
 		this.changeNumberInfo();
 	};
 
-	changeDisplayOfNumbers = (number) => number.toLocaleString('en', { maximumFractionDigits: 0 });
+	changeDisplayOfNumbers = (number) => number.toLocaleString();
 }

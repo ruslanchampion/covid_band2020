@@ -878,12 +878,17 @@ var Card = /*#__PURE__*/function () {
 
     _defineProperty(this, "createCard", function () {
       var infoContainer = document.querySelector('.info-container');
-      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'title', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-prev card-btn', null, null, ['data-toggle', 'prev']), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'title-text', "Global ".concat(categoryOfInfo[_this.currentCase])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-next card-btn', null, null, ['data-toggle', 'next'])], infoContainer);
+      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'title', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-prev card-btn', null, null, ['data-toggle', 'prev']), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'title-text', "Global ".concat(categoryOfInfo[_this.currentNumberOfCategory])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-next card-btn', null, null, ['data-toggle', 'next'])], infoContainer);
     });
 
-    _defineProperty(this, "changeNumberInfo", function () {
+    _defineProperty(this, "changeNumberInfo", function (data) {
       var infoContainer = document.querySelector('.info-container');
-      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'info-numbers', _this.changeDisplayOfNumbers(_this.data[categoryOfInfo[_this.currentCase]]), infoContainer, ['data-color', "".concat(colorOfNumbers[_this.currentCase])]);
+
+      if (data) {
+        _this.selectedCountry = data;
+      }
+
+      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'info-numbers', _this.changeDisplayOfNumbers(_this.selectedCountry[categoryOfInfo[_this.currentNumberOfCategory]]), infoContainer, ['data-color', "".concat(colorOfNumbers[_this.currentNumberOfCategory])]);
     });
 
     _defineProperty(this, "removeDataInfo", function () {
@@ -897,20 +902,20 @@ var Card = /*#__PURE__*/function () {
       var title = document.querySelector('.title-text');
 
       if (value === 'next') {
-        _this.currentCase += 1;
+        _this.currentNumberOfCategory += 1;
 
-        if (_this.currentCase === categoryOfInfo.length) {
-          _this.currentCase = 0;
+        if (_this.currentNumberOfCategory === categoryOfInfo.length) {
+          _this.currentNumberOfCategory = 0;
         }
       } else {
-        _this.currentCase -= 1;
+        _this.currentNumberOfCategory -= 1;
 
-        if (_this.currentCase === -1) {
-          _this.currentCase = categoryOfInfo.length - 1;
+        if (_this.currentNumberOfCategory === -1) {
+          _this.currentNumberOfCategory = categoryOfInfo.length - 1;
         }
       }
 
-      title.innerHTML = "Global ".concat(categoryOfInfo[_this.currentCase]);
+      title.innerHTML = "Global ".concat(categoryOfInfo[_this.currentNumberOfCategory]);
 
       _this.removeDataInfo();
 
@@ -918,13 +923,12 @@ var Card = /*#__PURE__*/function () {
     });
 
     _defineProperty(this, "changeDisplayOfNumbers", function (number) {
-      return number.toLocaleString('en', {
-        maximumFractionDigits: 0
-      });
+      return number.toLocaleString();
     });
 
     this.data = [];
-    this.currentCase = 0;
+    this.currentNumberOfCategory = 0;
+    this.selectedCountry = {};
   }
 
   _createClass(Card, [{
@@ -937,7 +941,7 @@ var Card = /*#__PURE__*/function () {
 
         _this2.createCard();
 
-        _this2.changeNumberInfo();
+        _this2.changeNumberInfo(_this2.data);
 
         _this2.setListeners();
       })["catch"](function (err) {
@@ -1055,6 +1059,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Table; });
 /* harmony import */ var _create__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./create */ "./src/js/create.js");
 /* harmony import */ var _Data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Data */ "./src/js/Data.js");
+/* harmony import */ var _Card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Card */ "./src/js/Card.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -1062,6 +1067,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -1077,7 +1083,7 @@ var Table = /*#__PURE__*/function () {
 
     _defineProperty(this, "createTable", function () {
       var tableContainer = document.querySelector('.table-container');
-      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('table', 'table table-hover table-dark', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('thead', 'thead', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('tr', null, [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('th', 'table-head', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-prev table-btn', '', null, ['data-toggle', 'prev']), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('span', 'table-title', "".concat(tableTitle[_this.currentCase])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-next table-btn', '', null, ['data-toggle', 'next'])], null, ['colspan', 3], ['data-case', "".concat(dataCases[_this.currentCase])])])])], tableContainer);
+      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('table', 'table-1 table-hover table-dark', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('thead', 'thead', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('tr', null, [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-prev table-btn', '', null, ['data-toggle', 'prev']), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('span', 'table-title', "".concat(tableTitle[_this.currentCase])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-next table-btn', '', null, ['data-toggle', 'next'])])])], tableContainer);
     });
 
     _defineProperty(this, "removeTableData", function () {
@@ -1147,6 +1153,10 @@ var Table = /*#__PURE__*/function () {
       });
 
       console.log(data);
+
+      _this.card.removeDataInfo();
+
+      _this.card.changeNumberInfo(data);
     });
 
     _defineProperty(this, "changeDisplayOfNumbers", function (number) {
@@ -1165,6 +1175,7 @@ var Table = /*#__PURE__*/function () {
     this.currentCase = 0;
     this.isData = false;
     this.inputValue = '';
+    this.card = new _Card__WEBPACK_IMPORTED_MODULE_2__["default"]();
   }
 
   _createClass(Table, [{
@@ -1188,6 +1199,7 @@ var Table = /*#__PURE__*/function () {
       })["catch"](function (err) {
         return alert(err);
       });
+      this.card.handleMethods();
       return this;
     }
   }, {
@@ -1228,7 +1240,7 @@ var Table = /*#__PURE__*/function () {
       var _this5 = this;
 
       var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.data;
-      var table = document.querySelector('.table');
+      var table = document.querySelector('.table-1');
       var tbody = Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('tbody', 'tbody', null, table);
       var sortData = this.sortData(data);
       console.log(sortData);
@@ -1363,12 +1375,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _js_Table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./js/Table */ "./src/js/Table.js");
-/* harmony import */ var _js_Card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./js/Card */ "./src/js/Card.js");
-
 
 
 new _js_Table__WEBPACK_IMPORTED_MODULE_1__["default"]().handleMethods();
-new _js_Card__WEBPACK_IMPORTED_MODULE_2__["default"]().handleMethods();
 
 /***/ }),
 
