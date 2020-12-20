@@ -1,0 +1,16 @@
+//  ===bootstrap-grid  ===
+.container {
+  display: flex;
+  height: 500px;
+}
+
+.row {
+  flex: 1;
+}
+
+.col,
+[class*="col-"] {
+  display: flex;
+  border: 1px solid black;
+}
+// === /bootstrap-grid ===
