@@ -1,7 +1,8 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect, useState } from 'react'
+import ReactDOM from 'react-dom'
 import infoBox from './infoBox'
+import baseMap from "./baseMap"
 import './map/App.css';
 import {
   MenuItem,
@@ -62,6 +63,7 @@ function App() {
       {/* Graph */}
 
       {/* Map */}
+      <baseMap />
     </div>
   );
 }

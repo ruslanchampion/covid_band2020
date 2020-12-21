@@ -8,6 +8,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import infoBox from './infoBox';
+import baseMap from "./baseMap";
 import './map/App.css';
 import { MenuItem, FormControl, Select } from "@material-ui/core";
 function App() {
@@ -123,7 +124,8 @@ function App() {
       React.createElement('infoBox', { title: 'Coronavirus cases', total: 2000 }),
       React.createElement('infoBox', { title: 'Recoverd', total: 3000 }),
       React.createElement('infoBox', { title: 'Deathes', total: 4000 })
-    )
+    ),
+    React.createElement('baseMap', null)
   );
 }
 
