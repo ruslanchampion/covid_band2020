@@ -118,38 +118,6 @@ body {
   }
 }
 
-@media (max-width: 991px) {
-  .table-container {
-    .table-1 {
-      .count-of-cases {
-        font-size: 1.3rem;
-      }
-      .tbody {
-        .statistic-country {
-          padding: 5px;
-        }
-        &::-webkit-scrollbar {
-          width: 5px;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 767px) {
-  .table-container {
-    .table-1 {
-      font-size: 2rem;
-      .count-of-cases {
-        font-size: 2rem;
-      }
-      .country-flag {
-        width: 70px;
-      }
-    }
-  }
-}
-
 .btn {
   width: 0;
   height: 0;
@@ -179,7 +147,7 @@ body {
 // === /Table ===
 
 // === Card ===
-.info-container {
+.card-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -209,6 +177,106 @@ body {
 }
 // === /Card ===
 
+// === Footer ===
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 300px;
+
+  .info-container {
+    display: flex;
+    font-size: 1.8rem;
+    font-weight: bold;
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      color: black;
+      &__img {
+        width: 200px;
+
+        &:hover {
+          animation: shake 1.5s;
+        }
+      }
+      .mentor {
+        width: 300px;
+      }
+
+      &__text {
+      }
+    }
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+}
+// === /Footer ===
+
+@media (max-width: 991px) {
+  .table-container {
+    .table-1 {
+      .count-of-cases {
+        font-size: 1.3rem;
+      }
+      .tbody {
+        .statistic-country {
+          padding: 5px;
+        }
+        &::-webkit-scrollbar {
+          width: 5px;
+        }
+      }
+    }
+  }
+
+  .footer {
+    .info-container {
+      .info {
+        &__img {
+          width: 100px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .table-container {
+    .table-1 {
+      font-size: 2rem;
+      .count-of-cases {
+        font-size: 2rem;
+      }
+      .country-flag {
+        width: 70px;
+      }
+    }
+  }
+}
+
 [data-color="red"] {
   color: #e60000;
 }
@@ -229,7 +297,6 @@ body {
 //  ===bootstrap-grid  ===
 .container {
   display: flex;
-  height: 500px;
 }
 
 .row {

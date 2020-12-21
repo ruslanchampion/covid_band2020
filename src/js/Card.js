@@ -10,7 +10,6 @@ export default class Card {
 		this.data = [];
 		this.currentNumberOfCategory = 0;
 		this.selectedCountry = {};
-		this.countryName;
 	}
 
 	handleMethods() {
@@ -35,7 +34,7 @@ export default class Card {
 	}
 
 	createCard = (country) => {
-		const infoContainer = document.querySelector('.info-container');
+		const cardContainer = document.querySelector('.card-container');
 		let titleText = '';
 
 		if (country) {
@@ -52,13 +51,12 @@ export default class Card {
 				create('div', 'title-text', `${titleText} ${categoryOfInfo[this.currentNumberOfCategory]}`),
 				create('button', 'btn btn-next card-btn', null, null, ['data-toggle', 'next']),
 			],
-			infoContainer
+			cardContainer
 		);
 	};
-	// !TODO change name of method
 
 	changeInfoNumbers = (data) => {
-		const infoContainer = document.querySelector('.info-container');
+		const cardContainer = document.querySelector('.card-container');
 
 		if (data) {
 			this.selectedCountry = data;
@@ -71,7 +69,7 @@ export default class Card {
 			this.changeDisplayOfNumbers(
 				this.selectedCountry[categoryOfInfo[this.currentNumberOfCategory]]
 			),
-			infoContainer,
+			cardContainer,
 			['data-color', `${colorOfNumbers[this.currentNumberOfCategory]}`]
 		);
 	};
