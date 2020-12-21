@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import infoBox from './infoBox';
 import baseMap from "./baseMap";
+import Table from "./Table";
 import './map/App.css';
 import { MenuItem, FormControl, Select, Card, CardContent } from "@material-ui/core";
 function App() {
