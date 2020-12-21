@@ -1,12 +1,11 @@
-const webpack = require('webpack')
-const path = require('path')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyPlugin = require('copy-webpack-plugin')
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, options) => {
-	const isProduction = options.mode === 'production'
+	const isProduction = options.mode === 'production';
 
 	const config = {
 		mode: isProduction ? 'production' : 'development',
@@ -62,7 +61,7 @@ module.exports = (env, options) => {
 				{ from: './src/assets/img', to: 'img' },
 			]),
 		],
-	}
+	};
 
-	return config
-}
+	return config;
+};

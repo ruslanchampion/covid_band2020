@@ -82,7 +82,7 @@ export default class Table {
 			'table-1 table-hover table-dark',
 			[
 				create('thead', 'thead', [
-					create('tr', null, [
+					create('tr', 'thead-container', [
 						create('button', 'btn btn-prev table-btn', '', null, ['data-toggle', 'prev']),
 						create('span', 'table-title', `${tableTitle[this.currentCase]}`),
 						create('button', 'btn btn-next table-btn', '', null, ['data-toggle', 'next']),
@@ -190,7 +190,10 @@ export default class Table {
 		console.log(data);
 
 		this.card.removeDataInfo();
-		this.card.changeNumberInfo(data);
+		this.card.removeTitle();
+		this.card.createCard(data.country);
+		this.card.changeInfoNumbers(data);
+		this.card.setListeners();
 	};
 
 	changeDisplayOfNumbers = (number) => number.toLocaleString();

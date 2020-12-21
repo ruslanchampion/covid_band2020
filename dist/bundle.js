@@ -867,7 +867,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-var categoryOfInfo = ['cases', 'deaths', 'recovered', 'tests'];
+var categoryOfInfo = ['cases', 'tests', 'deaths', 'recovered'];
 var colorOfNumbers = ['red', 'aqua', 'black', 'green'];
 
 var Card = /*#__PURE__*/function () {
@@ -876,16 +876,25 @@ var Card = /*#__PURE__*/function () {
 
     _classCallCheck(this, Card);
 
-    _defineProperty(this, "createCard", function () {
+    _defineProperty(this, "createCard", function (country) {
       var infoContainer = document.querySelector('.info-container');
-      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'title', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-prev card-btn', null, null, ['data-toggle', 'prev']), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'title-text', "Global ".concat(categoryOfInfo[_this.currentNumberOfCategory])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-next card-btn', null, null, ['data-toggle', 'next'])], infoContainer);
+      var titleText = '';
+
+      if (country) {
+        titleText = country;
+      } else {
+        titleText = 'Global';
+      }
+
+      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'title', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-prev card-btn', null, null, ['data-toggle', 'prev']), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'title-text', "".concat(titleText, " ").concat(categoryOfInfo[_this.currentNumberOfCategory])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-next card-btn', null, null, ['data-toggle', 'next'])], infoContainer);
     });
 
-    _defineProperty(this, "changeNumberInfo", function (data) {
+    _defineProperty(this, "changeInfoNumbers", function (data) {
       var infoContainer = document.querySelector('.info-container');
 
       if (data) {
         _this.selectedCountry = data;
+        _this.countryName = data.country;
       }
 
       Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('div', 'info-numbers', _this.changeDisplayOfNumbers(_this.selectedCountry[categoryOfInfo[_this.currentNumberOfCategory]]), infoContainer, ['data-color', "".concat(colorOfNumbers[_this.currentNumberOfCategory])]);
@@ -896,10 +905,16 @@ var Card = /*#__PURE__*/function () {
       info.remove();
     });
 
+    _defineProperty(this, "removeTitle", function () {
+      var title = document.querySelector('.title');
+      title.remove();
+    });
+
     _defineProperty(this, "switchCase", function (event) {
       var currentTarget = event.currentTarget;
       var value = currentTarget.dataset.toggle;
       var title = document.querySelector('.title-text');
+      var titleCase = '';
 
       if (value === 'next') {
         _this.currentNumberOfCategory += 1;
@@ -915,11 +930,17 @@ var Card = /*#__PURE__*/function () {
         }
       }
 
-      title.innerHTML = "Global ".concat(categoryOfInfo[_this.currentNumberOfCategory]);
+      if (_this.countryName) {
+        titleCase = _this.countryName;
+      } else {
+        titleCase = 'Global';
+      }
+
+      title.innerHTML = "".concat(titleCase, " ").concat(categoryOfInfo[_this.currentNumberOfCategory]);
 
       _this.removeDataInfo();
 
-      _this.changeNumberInfo();
+      _this.changeInfoNumbers();
     });
 
     _defineProperty(this, "changeDisplayOfNumbers", function (number) {
@@ -929,6 +950,7 @@ var Card = /*#__PURE__*/function () {
     this.data = [];
     this.currentNumberOfCategory = 0;
     this.selectedCountry = {};
+    this.countryName;
   }
 
   _createClass(Card, [{
@@ -941,7 +963,7 @@ var Card = /*#__PURE__*/function () {
 
         _this2.createCard();
 
-        _this2.changeNumberInfo(_this2.data);
+        _this2.changeInfoNumbers(_this2.data);
 
         _this2.setListeners();
       })["catch"](function (err) {
@@ -1083,7 +1105,7 @@ var Table = /*#__PURE__*/function () {
 
     _defineProperty(this, "createTable", function () {
       var tableContainer = document.querySelector('.table-container');
-      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('table', 'table-1 table-hover table-dark', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('thead', 'thead', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('tr', null, [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-prev table-btn', '', null, ['data-toggle', 'prev']), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('span', 'table-title', "".concat(tableTitle[_this.currentCase])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-next table-btn', '', null, ['data-toggle', 'next'])])])], tableContainer);
+      Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('table', 'table-1 table-hover table-dark', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('thead', 'thead', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('tr', 'thead-container', [Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-prev table-btn', '', null, ['data-toggle', 'prev']), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('span', 'table-title', "".concat(tableTitle[_this.currentCase])), Object(_create__WEBPACK_IMPORTED_MODULE_0__["default"])('button', 'btn btn-next table-btn', '', null, ['data-toggle', 'next'])])])], tableContainer);
     });
 
     _defineProperty(this, "removeTableData", function () {
@@ -1156,7 +1178,13 @@ var Table = /*#__PURE__*/function () {
 
       _this.card.removeDataInfo();
 
-      _this.card.changeNumberInfo(data);
+      _this.card.removeTitle();
+
+      _this.card.createCard(data.country);
+
+      _this.card.changeInfoNumbers(data);
+
+      _this.card.setListeners();
     });
 
     _defineProperty(this, "changeDisplayOfNumbers", function (number) {

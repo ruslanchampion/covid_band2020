@@ -1,7 +1,8 @@
 import create from './create';
 import { getDataAll } from './Data';
 
-const categoryOfInfo = ['cases', 'deaths', 'recovered', 'tests'];
+const categoryOfInfo = ['cases', 'tests', 'deaths', 'recovered'];
+
 const colorOfNumbers = ['red', 'aqua', 'black', 'green'];
 
 export default class Card {
@@ -9,6 +10,7 @@ export default class Card {
 		this.data = [];
 		this.currentNumberOfCategory = 0;
 		this.selectedCountry = {};
+		this.countryName;
 	}
 
 	handleMethods() {
@@ -17,7 +19,7 @@ export default class Card {
 				this.data = data;
 
 				this.createCard();
-				this.changeNumberInfo(this.data);
+				this.changeInfoNumbers(this.data);
 
 				this.setListeners();
 			})
@@ -32,15 +34,22 @@ export default class Card {
 		toggleBtns.forEach((btn) => btn.addEventListener('click', this.switchCase));
 	}
 
-	createCard = () => {
+	createCard = (country) => {
 		const infoContainer = document.querySelector('.info-container');
+		let titleText = '';
+
+		if (country) {
+			titleText = country;
+		} else {
+			titleText = 'Global';
+		}
 
 		create(
 			'div',
 			'title',
 			[
 				create('button', 'btn btn-prev card-btn', null, null, ['data-toggle', 'prev']),
-				create('div', 'title-text', `Global ${categoryOfInfo[this.currentNumberOfCategory]}`),
+				create('div', 'title-text', `${titleText} ${categoryOfInfo[this.currentNumberOfCategory]}`),
 				create('button', 'btn btn-next card-btn', null, null, ['data-toggle', 'next']),
 			],
 			infoContainer
@@ -48,11 +57,12 @@ export default class Card {
 	};
 	// !TODO change name of method
 
-	changeNumberInfo = (data) => {
+	changeInfoNumbers = (data) => {
 		const infoContainer = document.querySelector('.info-container');
 
 		if (data) {
 			this.selectedCountry = data;
+			this.countryName = data.country;
 		}
 
 		create(
@@ -71,10 +81,16 @@ export default class Card {
 		info.remove();
 	};
 
+	removeTitle = () => {
+		const title = document.querySelector('.title');
+		title.remove();
+	};
+
 	switchCase = (event) => {
 		const { currentTarget } = event;
 		const value = currentTarget.dataset.toggle;
 		const title = document.querySelector('.title-text');
+		let titleCase = '';
 
 		if (value === 'next') {
 			this.currentNumberOfCategory += 1;
@@ -88,10 +104,16 @@ export default class Card {
 			}
 		}
 
-		title.innerHTML = `Global ${categoryOfInfo[this.currentNumberOfCategory]}`;
+		if (this.countryName) {
+			titleCase = this.countryName;
+		} else {
+			titleCase = 'Global';
+		}
+
+		title.innerHTML = `${titleCase} ${categoryOfInfo[this.currentNumberOfCategory]}`;
 
 		this.removeDataInfo();
-		this.changeNumberInfo();
+		this.changeInfoNumbers();
 	};
 
 	changeDisplayOfNumbers = (number) => number.toLocaleString();
