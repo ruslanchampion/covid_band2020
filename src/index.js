@@ -1,1 +1,1 @@
-import './map';
+import './mapGraph/map.js';

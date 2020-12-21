@@ -14,15 +14,38 @@ import { MenuItem, FormControl, Select, Card, CardContent } from "@material-ui/c
 function App() {
   var _this = this;
 
-  var _useState = useState([]),
+  var _useState = useState("worldwide"),
       _useState2 = _slicedToArray(_useState, 2),
-      countries = _useState2[0],
-      setCountries = _useState2[1];
+      country = _useState2[0],
+      setInputCountry = _useState2[1];
 
-  var _useState3 = useState('worldWide'),
+  var _useState3 = useState({}),
       _useState4 = _slicedToArray(_useState3, 2),
-      country = _useState4[0],
-      setCountry = _useState4[1];
+      countryInfo = _useState4[0],
+      setCountryInfo = _useState4[1];
+
+  var _useState5 = useState([]),
+      _useState6 = _slicedToArray(_useState5, 2),
+      countries = _useState6[0],
+      setCountries = _useState6[1];
+
+  var _useState7 = useState([]),
+      _useState8 = _slicedToArray(_useState7, 2),
+      mapCountries = _useState8[0],
+      setMapCountries = _useState8[1];
+
+  var _useState9 = useState([]),
+      _useState10 = _slicedToArray(_useState9, 2),
+      tableData = _useState10[0],
+      setTableData = _useState10[1];
+
+  useEffect(function () {
+    fetch("https://disease.sh/v3/covid-19/all").then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      setCountryInfo(data);
+    });
+  }, []);
 
   useEffect(function () {
     var getCountriesData = function () {
@@ -62,7 +85,7 @@ function App() {
 
   var onCountyChange = function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(event) {
-      var countyCode;
+      var countyCode, url;
       return _regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -71,7 +94,18 @@ function App() {
 
               setCountry(countyCode);
 
-            case 2:
+              url = countryCode === "worldwide" ? "https://disease.sh/v3/covid-19/all" : 'https://disease.sh/v3/covid-19/countries/' + countryCode;
+              _context2.next = 5;
+              return fetch(url).then(function (response) {
+                return response.json();
+              }).then(function (data) {
+                setInputCountry(countryCode);
+                setCountryInfo(data);
+                setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+                setMapZoom(4);
+              });
+
+            case 5:
             case 'end':
               return _context2.stop();
           }

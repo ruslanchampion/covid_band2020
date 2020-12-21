@@ -12,8 +12,19 @@ import {
   CardContent,
 } from "@material-ui/core";
 function App() {
+  const [country, setInputCountry] = useState("worldwide")
+  const [countryInfo, setCountryInfo] = useState({})
   const [countries, setCountries] = useState([])
-  const [country, setCountry] = useState('worldWide')
+  const [mapCountries, setMapCountries] = useState([])
+  const [tableData, setTableData] = useState([])
+
+  useEffect(() => {
+    fetch("https://disease.sh/v3/covid-19/all")
+      .then((response) => response.json())
+      .then((data) => {
+        setCountryInfo(data);
+      });
+  }, []);
 
   useEffect(() => {
     const getCountriesData = async () => {
@@ -34,6 +45,19 @@ function App() {
   const onCountyChange = async (event) => {
     const countyCode = event.target.value
     setCountry(countyCode)
+
+    const url =
+      countryCode === "worldwide"
+        ? "https://disease.sh/v3/covid-19/all"
+        : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+    await fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setInputCountry(countryCode);
+        setCountryInfo(data);
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+        setMapZoom(4);
+      });
   }
   return (
     <div className="app">
