@@ -3,7 +3,7 @@ import React from 'react'
 function baseMap() {
   return (
     <div className="map">
-      <h1></h1>
+      <h1>I am Map!</h1>
     </div>
   )
 }

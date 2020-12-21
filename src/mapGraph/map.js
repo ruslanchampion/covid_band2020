@@ -10,7 +10,7 @@ import ReactDOM from 'react-dom';
 import infoBox from './infoBox';
 import baseMap from "./baseMap";
 import './map/App.css';
-import { MenuItem, FormControl, Select } from "@material-ui/core";
+import { MenuItem, FormControl, Select, Card, CardContent } from "@material-ui/core";
 function App() {
   var _this = this;
 
@@ -88,44 +88,66 @@ function App() {
     { className: 'app' },
     React.createElement(
       'div',
-      { className: 'app__header' },
+      { className: 'app__left' },
       React.createElement(
-        'h1',
-        null,
-        'COVID19'
+        'div',
+        { className: 'app__header' },
+        React.createElement(
+          'h1',
+          null,
+          'COVID19'
+        ),
+        React.createElement(
+          FormControl,
+          { className: 'app__dropdown' },
+          React.createElement(
+            Select,
+            {
+              variant: 'outlined', onChange: onCountyChange,
+              value: country
+            },
+            React.createElement(
+              MenuItem,
+              { value: 'worldWide' },
+              'worldWide'
+            ),
+            countries.map(function (country) {
+              return React.createElement(
+                MenuItem,
+                { value: country.value },
+                country.name
+              );
+            })
+          )
+        )
       ),
       React.createElement(
-        FormControl,
-        { className: 'app__dropdown' },
-        React.createElement(
-          Select,
-          {
-            variant: 'outlined', onChange: onCountyChange,
-            value: country
-          },
-          React.createElement(
-            MenuItem,
-            { value: 'worldWide' },
-            'worldWide'
-          ),
-          countries.map(function (country) {
-            return React.createElement(
-              MenuItem,
-              { value: country.value },
-              country.name
-            );
-          })
-        )
-      )
+        'div',
+        { className: 'app__stats' },
+        React.createElement('infoBox', { title: 'Coronavirus cases', total: 2000 }),
+        React.createElement('infoBox', { title: 'Recoverd', total: 3000 }),
+        React.createElement('infoBox', { title: 'Deathes', total: 4000 })
+      ),
+      React.createElement('baseMap', null)
     ),
     React.createElement(
-      'div',
-      { className: 'app__stats' },
-      React.createElement('infoBox', { title: 'Coronavirus cases', total: 2000 }),
-      React.createElement('infoBox', { title: 'Recoverd', total: 3000 }),
-      React.createElement('infoBox', { title: 'Deathes', total: 4000 })
-    ),
-    React.createElement('baseMap', null)
+      Card,
+      { className: 'app__right' },
+      React.createElement(
+        CardContent,
+        null,
+        React.createElement(
+          'h3',
+          null,
+          'Live Cases by Country!'
+        ),
+        React.createElement(
+          'h3',
+          null,
+          'Worldwide new cases!'
+        )
+      )
+    )
   );
 }
 

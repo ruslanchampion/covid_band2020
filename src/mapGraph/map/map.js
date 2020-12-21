@@ -8,6 +8,8 @@ import {
   MenuItem,
   FormControl,
   Select,
+  Card,
+  CardContent,
 } from "@material-ui/core";
 function App() {
   const [countries, setCountries] = useState([])
@@ -35,6 +37,7 @@ function App() {
   }
   return (
     <div className="app">
+     <div className="app__left"> 
       <div className="app__header">
         <h1>COVID19</h1>
         <FormControl className="app__dropdown">
@@ -53,17 +56,16 @@ function App() {
         <infoBox title="Coronavirus cases" total={2000}/>
         <infoBox title="Recoverd" total={3000}/>
         <infoBox title="Deathes" total={4000}/>
-      {/* InfoBoxs */}
-      {/* InfoBoxs */}
-      {/* InfoBoxs */}
       </div>          
       
-
-      {/* Table */}
-      {/* Graph */}
-
-      {/* Map */}
       <baseMap />
+     </div> 
+     <Card className="app__right">
+        <CardContent>
+          <h3>Live Cases by Country!</h3>
+          <h3>Worldwide new cases!</h3>
+        </CardContent>
+     </Card>
     </div>
   );
 }
