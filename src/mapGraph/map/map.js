@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import infoBox from './infoBox'
 import baseMap from "./baseMap"
-import Table from "./Table";
-import './map/App.css';
+import Table from './Table'
+import LineGraph from ''./LineGraph'
+import './map/App.css'
 import {
   MenuItem,
   FormControl,
@@ -24,24 +25,24 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setCountryInfo(data);
-      });
-  }, []);
+      })
+  }, [])
 
   useEffect(() => {
     const getCountriesData = async () => {
-      await fetch("https://disease.sh/v3/covid-19/countries").then((response) => response.json())
-      .then((data) => {
-        const countries = data.map((country)=> (
-          {
+      fetch("https://disease.sh/v3/covid-19/countries")
+        .then((response) => response.json())
+        .then((data) => {
+          const countries = data.map((country) => ({
             name: country.country,
-            value: country.countryInfo.iso2
+            value: country.countryInfo.iso2,
           }))
-
-        setCountries(countries)
-      })
+          let sortedData = sortData(data)
+          setCountries(countries)
+          setMapCountries(data)
+          setTableData(sortedData)
+        })
     }
-    getCountriesData()
-  }, [] )
 
   const onCountyChange = async (event) => {
     const countyCode = event.target.value
@@ -54,11 +55,9 @@ function App() {
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        setInputCountry(countryCode);
-        setCountryInfo(data);
-        setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-        setMapZoom(4);
-      });
+        setInputCountry(countryCode)
+        setCountryInfo(data)
+      })
   }
   return (
     <div className="app">
@@ -87,10 +86,14 @@ function App() {
      </div> 
      <Card className="app__right">
         <CardContent>
-          <h3>Live Cases by Country!</h3>
-          <h3>Worldwide new cases!</h3>
+          <div className="app__information">
+            <h3>Live Cases by Country</h3>
+            <Table countries={tableData} />
+            <h3>Worldwide new {casesType}</h3>
+            <LineGraph casesType={casesType} />
+          </div>
         </CardContent>
-     </Card>
+      </Card>
     </div>
   );
 }
