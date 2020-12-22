@@ -87,8 +87,6 @@ function LineGraph(_ref) {
                 }).then(function (data) {
                   var chartData = buildChartData(data, casesType);
                   setData(chartData);
-                  console.log(chartData);
-                  // buildChart(chartData);
                 });
 
               case 2:

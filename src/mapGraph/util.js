@@ -13,3 +13,6 @@ export var sortData = function sortData(data) {
   });
   return sortedData;
 };
+export var prettyPrintStat = function prettyPrintStat(stat) {
+  return stat ? "+" + numeral(stat).format("0.0a") : "+0";
+};

@@ -7,13 +7,13 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import infoBox from './infoBox';
 import baseMap from "./baseMap";
 import Table from './Table';
 import LineGraph from './LineGraph';
 import './map/App.css';
 import numeral from 'numeral';
 import { sortData, prettyPrintStat } from './util';
+import InfoBox from './InfoBox';
 import { MenuItem, FormControl, Select, Card, CardContent } from '@material-ui/core';
 function App() {
   var _this = this;
@@ -94,16 +94,16 @@ function App() {
     getCountriesData();
   }, []);
 
-  var onCountyChange = function () {
+  var onCountryChange = function () {
     var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(event) {
-      var countyCode, url;
+      var countryCode, url;
       return _regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              countyCode = event.target.value;
+              countryCode = event.target.value;
 
-              setCountry(countyCode);
+              setCountry(countryCode);
 
               url = countryCode === "worldwide" ? "https://disease.sh/v3/covid-19/all" : 'https://disease.sh/v3/covid-19/countries/' + countryCode;
               _context2.next = 5;
@@ -122,7 +122,7 @@ function App() {
       }, _callee2, _this);
     }));
 
-    return function onCountyChange(_x) {
+    return function onCountryChange(_x) {
       return _ref2.apply(this, arguments);
     };
   }();
@@ -138,7 +138,7 @@ function App() {
         React.createElement(
           'h1',
           null,
-          'COVID19'
+          'COVID-19 Tracker'
         ),
         React.createElement(
           FormControl,
@@ -146,13 +146,14 @@ function App() {
           React.createElement(
             Select,
             {
-              variant: 'outlined', onChange: onCountyChange,
-              value: country
+              variant: 'outlined',
+              value: country,
+              onChange: onCountryChange
             },
             React.createElement(
               MenuItem,
-              { value: 'worldWide' },
-              'worldWide'
+              { value: 'worldwide' },
+              'Worldwide'
             ),
             countries.map(function (country) {
               return React.createElement(
@@ -167,9 +168,35 @@ function App() {
       React.createElement(
         'div',
         { className: 'app__stats' },
-        React.createElement('infoBox', { title: 'Coronavirus cases', total: 2000 }),
-        React.createElement('infoBox', { title: 'Recoverd', total: 3000 }),
-        React.createElement('infoBox', { title: 'Deathes', total: 4000 })
+        React.createElement(InfoBox, {
+          onClick: function onClick(e) {
+            return setCasesType("cases");
+          },
+          title: 'Coronavirus Cases',
+          isRed: true,
+          active: casesType === "cases",
+          cases: prettyPrintStat(countryInfo.todayCases),
+          total: numeral(countryInfo.cases).format("0.0a")
+        }),
+        React.createElement(InfoBox, {
+          onClick: function onClick(e) {
+            return setCasesType("recovered");
+          },
+          title: 'Recovered',
+          active: casesType === "recovered",
+          cases: prettyPrintStat(countryInfo.todayRecovered),
+          total: numeral(countryInfo.recovered).format("0.0a")
+        }),
+        React.createElement(InfoBox, {
+          onClick: function onClick(e) {
+            return setCasesType("deaths");
+          },
+          title: 'Deaths',
+          isRed: true,
+          active: casesType === "deaths",
+          cases: prettyPrintStat(countryInfo.todayDeaths),
+          total: numeral(countryInfo.deaths).format("0.0a")
+        })
       )
     ),
     React.createElement(

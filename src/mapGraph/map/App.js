@@ -1,13 +1,13 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
-import infoBox from './infoBox'
 import baseMap from "./baseMap"
 import Table from './Table'
 import LineGraph from './LineGraph'
 import './map/App.css'
 import numeral from 'numeral'
 import { sortData, prettyPrintStat } from './util'
+import InfoBox from './InfoBox'
 import {
   MenuItem,
   FormControl,
@@ -50,9 +50,9 @@ function App() {
     getCountriesData();
   }, [])
 
-  const onCountyChange = async (event) => {
-    const countyCode = event.target.value
-    setCountry(countyCode)
+  const onCountryChange = async (event) => {
+    const countryCode = event.target.value
+    setCountry(countryCode)
 
     const url = countryCode === "worldwide"
         ? "https://disease.sh/v3/covid-19/all"
@@ -66,28 +66,48 @@ function App() {
   }
   return (
     <div className="app">
-     <div className="app__left"> 
-      <div className="app__header">
-        <h1>COVID19</h1>
-        <FormControl className="app__dropdown">
-          <Select
-            variant="outlined" onChange={onCountyChange}
-            value={country}
-          >
-              <MenuItem value="worldWide">worldWide</ MenuItem>  
-              {countries.map(country => (
-                <MenuItem value={country.value}>{country.name}</ MenuItem>
+      <div className="app__left">
+        <div className="app__header">
+          <h1>COVID-19 Tracker</h1>
+          <FormControl className="app__dropdown">
+            <Select
+              variant="outlined"
+              value={country}
+              onChange={onCountryChange}
+            >
+              <MenuItem value="worldwide">Worldwide</MenuItem>
+              {countries.map((country) => (
+                <MenuItem value={country.value}>{country.name}</MenuItem>
               ))}
-          </Select>
-        </FormControl>
+            </Select>
+          </FormControl>
+        </div>
+        <div className="app__stats">
+          <InfoBox
+            onClick={(e) => setCasesType("cases")}
+            title="Coronavirus Cases"
+            isRed
+            active={casesType === "cases"}
+            cases={prettyPrintStat(countryInfo.todayCases)}
+            total={numeral(countryInfo.cases).format("0.0a")}
+          />
+          <InfoBox
+            onClick={(e) => setCasesType("recovered")}
+            title="Recovered"
+            active={casesType === "recovered"}
+            cases={prettyPrintStat(countryInfo.todayRecovered)}
+            total={numeral(countryInfo.recovered).format("0.0a")}
+          />
+          <InfoBox
+            onClick={(e) => setCasesType("deaths")}
+            title="Deaths"
+            isRed
+            active={casesType === "deaths"}
+            cases={prettyPrintStat(countryInfo.todayDeaths)}
+            total={numeral(countryInfo.deaths).format("0.0a")}
+          />
+        </div>
       </div>
-      <div className="app__stats">
-        <infoBox title="Coronavirus cases" total={2000}/>
-        <infoBox title="Recoverd" total={3000}/>
-        <infoBox title="Deathes" total={4000}/>
-      </div>          
-      {/* <baseMap /> */}
-     </div> 
      <Card className="app__right">
         <CardContent>
           <div className="app__information">
