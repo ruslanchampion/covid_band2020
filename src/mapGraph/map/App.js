@@ -4,21 +4,24 @@ import ReactDOM from 'react-dom'
 import infoBox from './infoBox'
 import baseMap from "./baseMap"
 import Table from './Table'
-import LineGraph from ''./LineGraph'
+import LineGraph from './LineGraph'
 import './map/App.css'
+import numeral from 'numeral'
+import { sortData, prettyPrintStat } from './util'
 import {
   MenuItem,
   FormControl,
   Select,
   Card,
   CardContent,
-} from "@material-ui/core";
+} from '@material-ui/core';
 function App() {
   const [country, setInputCountry] = useState("worldwide")
   const [countryInfo, setCountryInfo] = useState({})
   const [countries, setCountries] = useState([])
   const [mapCountries, setMapCountries] = useState([])
   const [tableData, setTableData] = useState([])
+  const [casesType, setCasesType] = useState("cases")
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
@@ -44,12 +47,14 @@ function App() {
         })
     }
 
+    getCountriesData();
+  }, [])
+
   const onCountyChange = async (event) => {
     const countyCode = event.target.value
     setCountry(countyCode)
 
-    const url =
-      countryCode === "worldwide"
+    const url = countryCode === "worldwide"
         ? "https://disease.sh/v3/covid-19/all"
         : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
     await fetch(url)
@@ -81,8 +86,7 @@ function App() {
         <infoBox title="Recoverd" total={3000}/>
         <infoBox title="Deathes" total={4000}/>
       </div>          
-      
-      <baseMap />
+      {/* <baseMap /> */}
      </div> 
      <Card className="app__right">
         <CardContent>
@@ -97,8 +101,9 @@ function App() {
     </div>
   );
 }
-
-ReactDOM.render(<React.StrictMode>
-  <App />
-</React.StrictMode>,
-document.getElementById('mapReact'));
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('mapReact')
+);

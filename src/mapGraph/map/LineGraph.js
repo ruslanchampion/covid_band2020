@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Line } from "react-chartjs-2";
-import numeral from "numeral";
+import React, { useState, useEffect } from "react"
+import { Line } from "react-chartjs-2"
+import numeral from "numeral"
 
 const options = {
   legend: {
@@ -37,7 +37,6 @@ const options = {
           display: false,
         },
         ticks: {
-          // Include a dollar sign in the ticks
           callback: function (value, index, values) {
             return numeral(value).format("0a");
           },
@@ -85,7 +84,7 @@ function LineGraph({ casesType }) {
 
   return (
     <div>
-      {data?.length > 0 && (
+      {data && data.length > 0 && (
         <Line
           data={{
             datasets: [

@@ -9,9 +9,12 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import infoBox from './infoBox';
 import baseMap from "./baseMap";
-import Table from "./Table";
+import Table from './Table';
+import LineGraph from './LineGraph';
 import './map/App.css';
-import { MenuItem, FormControl, Select, Card, CardContent } from "@material-ui/core";
+import numeral from 'numeral';
+import { sortData, prettyPrintStat } from './util';
+import { MenuItem, FormControl, Select, Card, CardContent } from '@material-ui/core';
 function App() {
   var _this = this;
 
@@ -40,6 +43,11 @@ function App() {
       tableData = _useState10[0],
       setTableData = _useState10[1];
 
+  var _useState11 = useState("cases"),
+      _useState12 = _slicedToArray(_useState11, 2),
+      casesType = _useState12[0],
+      setCasesType = _useState12[1];
+
   useEffect(function () {
     fetch("https://disease.sh/v3/covid-19/all").then(function (response) {
       return response.json();
@@ -55,8 +63,7 @@ function App() {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return fetch("https://disease.sh/v3/covid-19/countries").then(function (response) {
+                fetch("https://disease.sh/v3/covid-19/countries").then(function (response) {
                   return response.json();
                 }).then(function (data) {
                   var countries = data.map(function (country) {
@@ -65,11 +72,13 @@ function App() {
                       value: country.countryInfo.iso2
                     };
                   });
-
+                  var sortedData = sortData(data);
                   setCountries(countries);
+                  setMapCountries(data);
+                  setTableData(sortedData);
                 });
 
-              case 2:
+              case 1:
               case 'end':
                 return _context.stop();
             }
@@ -81,6 +90,7 @@ function App() {
         return _ref.apply(this, arguments);
       };
     }();
+
     getCountriesData();
   }, []);
 
@@ -102,8 +112,6 @@ function App() {
               }).then(function (data) {
                 setInputCountry(countryCode);
                 setCountryInfo(data);
-                setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
-                setMapZoom(4);
               });
 
             case 5:
@@ -162,8 +170,7 @@ function App() {
         React.createElement('infoBox', { title: 'Coronavirus cases', total: 2000 }),
         React.createElement('infoBox', { title: 'Recoverd', total: 3000 }),
         React.createElement('infoBox', { title: 'Deathes', total: 4000 })
-      ),
-      React.createElement('baseMap', null)
+      )
     ),
     React.createElement(
       Card,
@@ -172,20 +179,26 @@ function App() {
         CardContent,
         null,
         React.createElement(
-          'h3',
-          null,
-          'Live Cases by Country!'
-        ),
-        React.createElement(
-          'h3',
-          null,
-          'Worldwide new cases!'
+          'div',
+          { className: 'app__information' },
+          React.createElement(
+            'h3',
+            null,
+            'Live Cases by Country'
+          ),
+          React.createElement(Table, { countries: tableData }),
+          React.createElement(
+            'h3',
+            null,
+            'Worldwide new ',
+            casesType
+          ),
+          React.createElement(LineGraph, { casesType: casesType })
         )
       )
     )
   );
 }
-
 ReactDOM.render(React.createElement(
   React.StrictMode,
   null,

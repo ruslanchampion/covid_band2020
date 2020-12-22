@@ -1,3 +1,5 @@
+import numeral from 'numeral'
+
 export const sortData = (data) => {
   let sortedData = [...data];
   sortedData.sort((a, b) => {
