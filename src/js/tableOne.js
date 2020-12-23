@@ -130,43 +130,6 @@ function createRegionElement(countryData) {
 	divRegionDetails.appendChild(pTotalConfirmed);
 	divRegionDetails.appendChild(pTotalDeaths);
 	divRegionDetails.appendChild(pTotalRecovered);
-
-
-
-	// const divRegionsData = document.querySelector('#region');
-
-	// const divRegionsBlockOne = document.createElement("div");
-	// divRegionsBlockOne.classList.add("blockOneCountry");
-
-	// const pCountryName = document.createElement("p");
-	// pCountryName.classList.add("cdr");
-	// pCountryName.innerHTML = countryData.Country;
-
-
-	// const divRegionDetails = document.createElement("div");
-	// divRegionDetails.classList.add("propertiesCountry");
-
-	// const pTotalConfirmed = document.createElement("p");
-	// pTotalConfirmed.classList.add("confirmed");
-	// pTotalConfirmed.innerHTML = getTotalConfirmedInfo(countryData);
-
-	// const pTotalDeaths = document.createElement("p");
-	// pTotalDeaths.classList.add("deaths");
-	// pTotalDeaths.innerHTML = getTotalDeathsInfo(countryData);
-
-	// const pTotalRecovered = document.createElement("p");
-	// pTotalRecovered.classList.add("recovered");
-	// pTotalRecovered.innerHTML = getTotalRecoveredInfo(countryData);
-
-
-	// divRegionsData.appendChild(divRegionsBlockOne);
-	// divRegionsData.appendChild(divRegionDetails);
-
-	// divRegionsBlockOne.appendChild(pCountryName);
-
-	// divRegionDetails.appendChild(pTotalConfirmed);
-	// divRegionDetails.appendChild(pTotalDeaths);
-	// divRegionDetails.appendChild(pTotalRecovered);
 }
 
 function getTotalConfirmedInfo(countryData) {

@@ -33,7 +33,7 @@ body {
 }
 
 .modul-theSecond {
-    width: 550px;
+    max-width: 550px;
 }
 
 .list-group {
@@ -52,7 +52,7 @@ body {
 }
 
 #region {
-    height: 32.8rem;
+    height: 37.8rem;
     border-bottom: 1px solid $color-dark-gray;
     width: 100%;
     overflow: auto;
@@ -63,8 +63,6 @@ body {
     justify-content: space-between;
     border-bottom: 0.1rem solid $color-gray;
     &:p{
-        font-size: 1.4rem;
-        font-weight: 700;
         margin-left: 10rem;
         margin-bottom: 0rem;
     }
@@ -75,20 +73,25 @@ body {
 }
 
 .cdr {
-    line-height: 62px;
+	line-height: 65px;
+	margin-left: 10rem;
+	margin-top: 1rem;
+	font-size: 1.4rem;
+	font-weight: 700;
 }
 
 .propertiesCountry {
     width: 21rem;
-    margin-right: 10rem;
     &:p{
         margin-bottom: 0rem;
-        font-weight: 400;
+		font-weight: 400;
     }
 }
 
 .confirmed {
-    color: #73b2ff;
+	color: #73b2ff;
+	margin-top: 1rem;
+	
 }
 
 .deaths {
@@ -98,12 +101,19 @@ body {
 .recovered {
     color: #70a800;
 }
+.confirmed,
+.deaths,
+.recovered{
+	font-size: 1.2rem;
+}
+
 
 #switch-amount {
     height: 3rem;
     display: flex;
     justify-content: center;
-    column-gap: 4px;
+	column-gap: 4px;
+	align-items: center;
 }
 
 #switch-amount p,
@@ -134,6 +144,11 @@ body {
     border-left: 0.1rem solid $color-gray;
     border-bottom: 0.2rem solid #2493f2;
 }
+#totalInTheCountry span,
+#basedOn100thdPopulation{
+	font-size: 1.2rem;
+    color: $color-light-gray;
+}
 
 .addVisit {
     box-shadow: 0px 0px 5px 1px white;
@@ -161,7 +176,7 @@ body {
 .global__buttons {
     display: flex;
     row-gap: 3rem;
-    margin: 5px 0 0 0;
+    margin: 5px 5px 0 0;
     flex-direction: column;
 }
 
