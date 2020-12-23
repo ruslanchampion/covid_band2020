@@ -2,72 +2,118 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-    rel="stylesheet">
-  <title>COVID2019</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+		rel="stylesheet">
+	<title>COVID2019</title>
 </head>
 
 <body>
-  <main>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 col-xs-12">
-          <div class="row flex-column">
-            <div class="card-container"></div>
-            <div class="table-container">
-              <input type="search" class='search-input' placeholder="Search your country..." disabled>
-            </div>
-          </div>
-        </div>
-        <div class='col-md-9 col-xs-12'>
-          <div class="row">
-            <div class="col-lg-9 col-md-12">Map</div>
-            <div class="col-lg-3 col-md-12">
-              <div class="row flex-column">
-                <div class="col">
-                  <div class="row">
-                    <div class="col">Table 3</div>
-                  </div>
-                </div>
-                <div class="col">Chart</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
-  <footer class="footer">
-    <div class="info-container">
-      <a class="info" href="https://github.com/emarf" target="_blank">
-        <img class="info__img" src="./assets/img/char/orange-char.png" alt="green">
-        <div class="info__text">Roman</div>
-      </a>
-      <a class="info" href="https://github.com/ruslanchampion" target="_blank">
-        <img class="info__img" src="./assets/img/char/green-char.png" alt="green">
-        <div class="info__text">Ruslan</div>
-      </a>
-      <a class="info" href="https://github.com/takegu" target="_blank">
-        <img class="mentor info__img" src="./assets/img/char/red-char.png" alt="green">
-        <div class="info__text">Andrei(mentor)</div>
-      </a>
-      <a class="info" href="https://github.com/mariyafrantsava" target="_blank">
-        <img class="info__img" src="./assets/img/char/pink-char.png" alt="green">
-        <div class="info__text">Mariya</div>
-      </a>
-      <a class="info" href="https://github.com/rugaroo" target="_blank">
-        <img class="info__img" src="./assets/img/char/yellow-char.png" alt="green">
-        <div class="info__text">Sophie</div>
-      </a>
-    </div>
-  </footer>
+	<main>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 col-xs-12">
+					<div class="row flex-column">
+						<div class="card-container"></div>
+						<div class="table-container">
+							<input type="search" class='search-input' placeholder="Search your country..." disabled>
+						</div>
+					</div>
+				</div>
+				<div class='col-md-9 col-xs-12'>
+					<div class="row">
+						<div class="col-lg-9 col-md-12">Map</div>
+						<div class="col-lg-3 col-md-12">
+							<div class="row flex-column">
+								<div class="col">
+									<div class="row">
+										<div class="col">
+											<!-- Table 3 -->
+											<div class="modul-theSecond">
+												<div class="list-group">
+													<div id="global">
+														<div class="global__mainInfo">
+															<p id="globalInfo"></p>
+
+															<p id="globalAmount__confirmed"></p>
+															<p id="globalAmount__deaths"></p>
+															<p id="globalAmount__recovered"></p>
+														</div>
+														<div class="global__buttons">
+															<div class="inputButtons">
+																<input type="text" placeholder="input country"
+																	id="findCountry" />
+																<button id="searchCountry">
+																	<i class="fas fa-search"></i>
+																</button>
+																<button id="cleanCountry">
+																	<i class="fa fa-remove" id="faClear"></i>
+																</button>
+															</div>
+															<div class="perWhichTime">
+																<button id="perAllTime">
+																	<p>Per all time</p>
+																</button>
+																<button id="perDay">
+																	<p>Per day</p>
+																</button>
+															</div>
+														</div>
+													</div>
+
+													<div id="region"></div>
+													<div id="switch-amount">
+														<button id="totalInTheCountry">
+															<p>Total in the country</p>
+														</button>
+														<button id="basedOn100thdPopulation">
+															<p>Вased on 100thd population</p>
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col">Chart</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+	<footer class="footer">
+		<div class="info-container">
+			<a class="info" href="https://github.com/emarf" target="_blank">
+				<img class="info__img" src="./assets/img/char/orange-char.png" alt="green">
+				<div class="info__text">Roman</div>
+			</a>
+			<a class="info" href="https://github.com/ruslanchampion" target="_blank">
+				<img class="info__img" src="./assets/img/char/green-char.png" alt="green">
+				<div class="info__text">Ruslan</div>
+			</a>
+			<a class="info" href="https://github.com/takegu" target="_blank">
+				<img class="mentor info__img" src="./assets/img/char/red-char.png" alt="green">
+				<div class="info__text">Andrei(mentor)</div>
+			</a>
+			<a class="info" href="https://github.com/mariyafrantsava" target="_blank">
+				<img class="info__img" src="./assets/img/char/pink-char.png" alt="green">
+				<div class="info__text">Mariya</div>
+			</a>
+			<a class="info" href="https://github.com/rugaroo" target="_blank">
+				<img class="info__img" src="./assets/img/char/yellow-char.png" alt="green">
+				<div class="info__text">Sophie</div>
+			</a>
+		</div>
+	</footer>
 </body>
 
 </html>
