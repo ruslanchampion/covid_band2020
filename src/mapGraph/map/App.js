@@ -1,20 +1,22 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
-import baseMap from "./baseMap"
-import Table from './Table'
-import LineGraph from './LineGraph'
-import './map/App.css'
-import numeral from 'numeral'
-import { sortData, prettyPrintStat } from './util'
-import InfoBox from './InfoBox'
+import "./map/App.css"
 import {
   MenuItem,
   FormControl,
   Select,
   Card,
   CardContent,
-} from '@material-ui/core';
+} from "@material-ui/core"
+import InfoBox from "./InfoBox"
+import LineGraph from "./LineGraph"
+import Table from "./Table"
+import { sortData, prettyPrintStat } from "./util"
+import numeral from "numeral"
+import Map from "./baseMap"
+import "leaflet/dist/leaflet.css"
+
 function App() {
   const [country, setInputCountry] = useState("worldwide")
   const [countryInfo, setCountryInfo] = useState({})
@@ -22,6 +24,8 @@ function App() {
   const [mapCountries, setMapCountries] = useState([])
   const [tableData, setTableData] = useState([])
   const [casesType, setCasesType] = useState("cases")
+  const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 })
+  const [mapZoom, setMapZoom] = useState(3)
 
   useEffect(() => {
     fetch("https://disease.sh/v3/covid-19/all")
@@ -50,18 +54,19 @@ function App() {
     getCountriesData();
   }, [])
 
-  const onCountryChange = async (event) => {
-    const countryCode = event.target.value
-    setCountry(countryCode)
-
-    const url = countryCode === "worldwide"
+  const onCountryChange = async (e) => {
+    const countryCode = e.target.value
+    const url = 
+      countryCode === "worldwide"
         ? "https://disease.sh/v3/covid-19/all"
-        : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+        : `https://disease.sh/v3/covid-19/countries/${countryCode}`
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
         setInputCountry(countryCode)
         setCountryInfo(data)
+        setMapCenter([data.countryInfo.lat, data.countryInfo.long])
+        setMapZoom(4)
       })
   }
   return (
@@ -88,14 +93,14 @@ function App() {
             title="Coronavirus Cases"
             isRed
             active={casesType === "cases"}
-            cases={prettyPrintStat(countryInfo.todayCases)}
+            cases={prettyPrintStat(countryInfo.activePerOneMillion)}
             total={numeral(countryInfo.cases).format("0.0a")}
           />
           <InfoBox
             onClick={(e) => setCasesType("recovered")}
             title="Recovered"
             active={casesType === "recovered"}
-            cases={prettyPrintStat(countryInfo.todayRecovered)}
+            cases={prettyPrintStat(countryInfo.recoveredPerOneMillion)}
             total={numeral(countryInfo.recovered).format("0.0a")}
           />
           <InfoBox
@@ -103,22 +108,29 @@ function App() {
             title="Deaths"
             isRed
             active={casesType === "deaths"}
-            cases={prettyPrintStat(countryInfo.todayDeaths)}
+            cases={prettyPrintStat(countryInfo.criticalPerOneMillion)}
             total={numeral(countryInfo.deaths).format("0.0a")}
           />
         </div>
+        <Map
+          countries={mapCountries}
+          casesType={casesType}
+          center={mapCenter}
+          zoom={mapZoom}
+          
+        />
       </div>
-     <Card className="app__right">
+       <Card className="app__right">
         <CardContent>
           <div className="app__information">
-            <h3>Live Cases by Country</h3>
-            <Table countries={tableData} />
-            <h3>Worldwide new {casesType}</h3>
+            {/* <h3>Live Cases by Country</h3>
+            <Table countries={tableData} /> */
+             <h3>Worldwide new {casesType}</h3>
             <LineGraph casesType={casesType} />
           </div>
         </CardContent>
-      </Card>
-    </div>
+      </Card> 
+    </div> 
   );
 }
 ReactDOM.render(

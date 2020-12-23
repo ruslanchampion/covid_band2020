@@ -12,7 +12,6 @@ function InfoBox(_ref) {
       isRed = _ref.isRed,
       props = _objectWithoutProperties(_ref, ["title", "cases", "total", "active", "isRed"]);
 
-  console.log(title, active);
   return React.createElement(
     Card,
     {

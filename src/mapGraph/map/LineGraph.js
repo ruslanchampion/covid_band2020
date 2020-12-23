@@ -47,15 +47,18 @@ const options = {
 };
 
 const buildChartData = (data, casesType) => {
+  let MAXRANGE = 1000000;
   let chartData = [];
   let lastDataPoint;
   for (let date in data.cases) {
     if (lastDataPoint) {
       let newDataPoint = {
         x: date,
-        y: data[casesType][date] - lastDataPoint,
+        y: Math.abs(data[casesType][date] - lastDataPoint) > MAXRANGE ? MAXRANGE : Math.abs(data[casesType][date] - lastDataPoint),
       };
+      console.log(newDataPoint);
       chartData.push(newDataPoint);
+      console.log(chartData);
     }
     lastDataPoint = data[casesType][date];
   }
@@ -79,16 +82,15 @@ function LineGraph({ casesType }) {
 
     fetchData();
   }, [casesType]);
-
   return (
     <div>
-      {data && data.length > 0 && (
+      {data.length > 0 && (
         <Line
           data={{
             datasets: [
               {
-                backgroundColor: "rgba(204, 16, 52, 0.5)",
-                borderColor: "#CC1034",
+                backgroundColor: "rgba(38, 32, 32, 0.5)",
+                borderColor: "#171313",
                 data: data,
               },
             ],
@@ -99,5 +101,6 @@ function LineGraph({ casesType }) {
     </div>
   );
 }
+export default LineGraph
 
-export default LineGraph;
+

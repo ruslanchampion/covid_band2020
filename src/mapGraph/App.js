@@ -7,14 +7,16 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import baseMap from "./baseMap";
-import Table from './Table';
-import LineGraph from './LineGraph';
-import './map/App.css';
-import numeral from 'numeral';
-import { sortData, prettyPrintStat } from './util';
-import InfoBox from './InfoBox';
-import { MenuItem, FormControl, Select, Card, CardContent } from '@material-ui/core';
+import "./map/App.css";
+import { MenuItem, FormControl, Select, Card, CardContent } from "@material-ui/core";
+import InfoBox from "./InfoBox";
+import LineGraph from "./LineGraph";
+import Table from "./Table";
+import { sortData, prettyPrintStat } from "./util";
+import numeral from "numeral";
+import Map from "./baseMap";
+import "leaflet/dist/leaflet.css";
+
 function App() {
   var _this = this;
 
@@ -47,6 +49,16 @@ function App() {
       _useState12 = _slicedToArray(_useState11, 2),
       casesType = _useState12[0],
       setCasesType = _useState12[1];
+
+  var _useState13 = useState({ lat: 34.80746, lng: -40.4796 }),
+      _useState14 = _slicedToArray(_useState13, 2),
+      mapCenter = _useState14[0],
+      setMapCenter = _useState14[1];
+
+  var _useState15 = useState(3),
+      _useState16 = _slicedToArray(_useState15, 2),
+      mapZoom = _useState16[0],
+      setMapZoom = _useState16[1];
 
   useEffect(function () {
     fetch("https://disease.sh/v3/covid-19/all").then(function (response) {
@@ -95,26 +107,25 @@ function App() {
   }, []);
 
   var onCountryChange = function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(event) {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee2(e) {
       var countryCode, url;
       return _regeneratorRuntime.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              countryCode = event.target.value;
-
-              setCountry(countryCode);
-
+              countryCode = e.target.value;
               url = countryCode === "worldwide" ? "https://disease.sh/v3/covid-19/all" : 'https://disease.sh/v3/covid-19/countries/' + countryCode;
-              _context2.next = 5;
+              _context2.next = 4;
               return fetch(url).then(function (response) {
                 return response.json();
               }).then(function (data) {
                 setInputCountry(countryCode);
                 setCountryInfo(data);
+                setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
+                setMapZoom(4);
               });
 
-            case 5:
+            case 4:
             case 'end':
               return _context2.stop();
           }
@@ -175,7 +186,7 @@ function App() {
           title: 'Coronavirus Cases',
           isRed: true,
           active: casesType === "cases",
-          cases: prettyPrintStat(countryInfo.todayCases),
+          cases: prettyPrintStat(countryInfo.activePerOneMillion),
           total: numeral(countryInfo.cases).format("0.0a")
         }),
         React.createElement(InfoBox, {
@@ -184,7 +195,7 @@ function App() {
           },
           title: 'Recovered',
           active: casesType === "recovered",
-          cases: prettyPrintStat(countryInfo.todayRecovered),
+          cases: prettyPrintStat(countryInfo.recoveredPerOneMillion),
           total: numeral(countryInfo.recovered).format("0.0a")
         }),
         React.createElement(InfoBox, {
@@ -194,10 +205,17 @@ function App() {
           title: 'Deaths',
           isRed: true,
           active: casesType === "deaths",
-          cases: prettyPrintStat(countryInfo.todayDeaths),
+          cases: prettyPrintStat(countryInfo.criticalPerOneMillion),
           total: numeral(countryInfo.deaths).format("0.0a")
         })
-      )
+      ),
+      React.createElement(Map, {
+        countries: mapCountries,
+        casesType: casesType,
+        center: mapCenter,
+        zoom: mapZoom
+
+      })
     ),
     React.createElement(
       Card,
@@ -208,12 +226,6 @@ function App() {
         React.createElement(
           'div',
           { className: 'app__information' },
-          React.createElement(
-            'h3',
-            null,
-            'Live Cases by Country'
-          ),
-          React.createElement(Table, { countries: tableData }),
           React.createElement(
             'h3',
             null,
