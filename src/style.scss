@@ -1,6 +1,8 @@
-// @import "./scss/bootstrap.scss";
-// @import "./scss/custom";
-
+ @import "./mapGraph/map/App.css";
+ @import "./mapGraph/map/InfoBox.css";
+ @import "./mapGraph/map/Map.css";
+ @import "./mapGraph/map/Table.css";
+ @import "./mapGraph/map/leaflet.css";
 // === Mixins ===
 @mixin font-main {
   font-family: "Roboto", sans-serif;

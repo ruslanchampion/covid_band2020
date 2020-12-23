@@ -5,9 +5,11 @@
 
 .app {
   display: flex;
-  justify-content: space-evenly;
-  padding: 20px;
-  background-color: dimgray;
+  justify-content: space-between;
+  flex-direction: column;
+  padding-top: 10px;
+  background-color: #212529;
+  max-width: 100vh;
 }
 .app__right {
   background-color: darkgray;
@@ -16,9 +18,9 @@
 .app__header {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   justify-content: space-between;
-  background-color: dimgrey;
+  /* background-color: dimgrey; */
 }
 
 .app__left {
@@ -38,9 +40,26 @@
   }
 }
 .MuiCard-root {
-  background-color: darkgray;
+  background-color: #212529;
   overflow: hidden;
 }
 .MuiPaper-root {
-  background-color: darkgray !important;
+  background-color: #212529 !important;
+}
+.MuiInputBase-input {
+  color: aliceblue !important;
+}
+
+.h3, h3 {
+  color: aliceblue;
+}
+.MuiTypography-colorTextSecondary {
+  color: aliceblue !important;
+}
+.col, [class*="col-"] {
+  border: none !important;
+  display: block;
+}
+.col-lg-9, .col-md-12 {
+  padding-right: 0px !important;
 }

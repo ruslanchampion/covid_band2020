@@ -6,21 +6,21 @@ import { Circle, Popup } from 'react-leaflet';
 
 var casesTypeColors = {
   cases: {
-    hex: "#170405",
-    rgb: "rgb(23, 4, 5)",
-    half_op: "rgba(23, 4, 5, 0.5)",
+    hex: "#e60000",
+    rgb: "rgb(230, 0, 0)",
+    half_op: "rgba(230, 0, 0, 0.5)",
     multiplier: 800
   },
   recovered: {
-    hex: "#1c3303",
-    rgb: "rgb(21, 38, 2)",
-    half_op: "rgba(21, 38, 2, 0.5)",
+    hex: "#34b004",
+    rgb: "rgb(52, 176, 4)",
+    half_op: "rgba(52, 176, 4, 0.5)",
     multiplier: 1200
   },
   deaths: {
-    hex: "#210509",
-    rgb: "rgb(41, 6, 6)",
-    half_op: "rgba(41, 6, 6, 0.5)",
+    hex: "#000000",
+    rgb: "rgb(0, 0, 0)",
+    half_op: "rgba(0, 0, 0, 0.5)",
     multiplier: 2000
   }
 };

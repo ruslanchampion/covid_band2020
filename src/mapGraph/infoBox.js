@@ -2,7 +2,6 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 
 import React from "react";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import "./map/InfoBox.css";
 
 function InfoBox(_ref) {
   var title = _ref.title,

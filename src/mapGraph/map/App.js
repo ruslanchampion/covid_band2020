@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
-import "./map/App.css"
+// import "./map/App.css"
 import {
   MenuItem,
   FormControl,
@@ -15,7 +15,7 @@ import Table from "./Table"
 import { sortData, prettyPrintStat } from "./util"
 import numeral from "numeral"
 import Map from "./baseMap"
-import "leaflet/dist/leaflet.css"
+// import "leaflet/dist/leaflet.css"
 
 function App() {
   const [country, setInputCountry] = useState("worldwide")
@@ -124,7 +124,7 @@ function App() {
         <CardContent>
           <div className="app__information">
             {/* <h3>Live Cases by Country</h3>
-            <Table countries={tableData} /> */
+            <Table countries={tableData} /> */}
              <h3>Worldwide new {casesType}</h3>
             <LineGraph casesType={casesType} />
           </div>

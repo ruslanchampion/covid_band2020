@@ -1,5 +1,4 @@
 import React from 'react'
-import './map/Table.css'
 import numeral from 'numeral'
 
 function Table({ countries }) {

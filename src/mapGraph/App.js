@@ -7,7 +7,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import "./map/App.css";
+// import "./map/App.css"
 import { MenuItem, FormControl, Select, Card, CardContent } from "@material-ui/core";
 import InfoBox from "./InfoBox";
 import LineGraph from "./LineGraph";
@@ -15,7 +15,7 @@ import Table from "./Table";
 import { sortData, prettyPrintStat } from "./util";
 import numeral from "numeral";
 import Map from "./baseMap";
-import "leaflet/dist/leaflet.css";
+// import "leaflet/dist/leaflet.css"
 
 function App() {
   var _this = this;
