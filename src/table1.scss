@@ -2,13 +2,7 @@ $color-black: #000;
 $color-gray: #525352;
 $color-dark-gray: #444444;
 $color-background-dark-gray: #404040;
-$color-ligth-gray: #bdbdbd;
-
-@charset "UTF-8";
-:root {
-    font-size: 10px;
-}
-
+$color-light-gray: #bdbdbd;
 ::-webkit-scrollbar {
     height: 0.7rem;
     width: 0.7rem;
@@ -38,7 +32,7 @@ body {
 }
 
 .modul-theSecond {
-    width: 550px;
+    max-width: 550px;
 }
 
 .list-group {
@@ -67,16 +61,15 @@ body {
     display: flex;
     justify-content: space-between;
     border-bottom: 0.1rem solid $color-gray;
-    &:p{
+    &:p {
         font-size: 1.4rem;
         font-weight: 700;
         margin-left: 10rem;
         margin-bottom: 0rem;
     }
-    &:hover{
-       background-color: #4f4f4f;
+    &:hover {
+        background-color: #4f4f4f;
     }
-            
 }
 
 .cdr {
@@ -86,7 +79,7 @@ body {
 .propertiesCountry {
     width: 21rem;
     margin-right: 10rem;
-    &:{
+    &:p {
         margin-bottom: 0rem;
         font-weight: 400;
     }
@@ -109,12 +102,13 @@ body {
     display: flex;
     justify-content: center;
     column-gap: 4px;
+    align-items: center;
 }
 
 #switch-amount p,
 .global__buttons button p {
     font-size: 1.2rem;
-    color: color-ligth-gray;
+    color: $color-light-gray;
 }
 
 #totalInTheCountry,
@@ -122,7 +116,7 @@ body {
 #perAllTime,
 #perDay {
     height: 2.5rem;
-    background-color:$color-black;
+    background-color: $color-black;
     border: none;
     border: 0.1rem solid $color-gray;
 }
@@ -208,7 +202,8 @@ body {
 .global__mainInfo {
     min-width: 29rem;
 }
-#faClear{
-    font-size:1rem;
-    color:red;
-    }
+
+#faClear {
+    font-size: 1rem;
+    color: red;
+}

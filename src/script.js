@@ -1,6 +1,6 @@
 import 'regenerator-runtime/runtime';
 import Table from './js/Table';
-import '.././src/table1.sass';
+import '.././src/table1.scss';
 // import '../../table1.css';
 
 new Table().handleMethods();
