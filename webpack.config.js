@@ -6,7 +6,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = (env, options) => {
 	const isProduction = options.mode === 'production';
-
 	const config = {
 		mode: isProduction ? 'production' : 'development',
 		devtool: isProduction ? 'none' : 'source-map',

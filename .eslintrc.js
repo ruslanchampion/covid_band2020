@@ -1,4 +1,5 @@
 module.exports = {
+<<<<<<< HEAD
 	env: {
 		browser: true,
 		es6: true,
