@@ -34,7 +34,6 @@ function getPopulation() {
 		.then(response => response.json())
 		.then(data => {
 			objPopulation = data;
-			console.log(objPopulation);
 		})
 }
 
@@ -75,6 +74,19 @@ perDay.addEventListener("click", function (event) {
 	typeTimeView = 'New';
 	updateView();
 });
+
+const region = document.querySelector('#region ');
+region.addEventListener("click", function (event) {
+	let clickElementCountry = event.target.closest('.blockOneCountry');
+	let clickCountryName = clickElementCountry.firstChild.innerHTML;
+
+	clearListcountryData();
+	fillGlobalInfo();
+	createRegionElement(findCountryData(clickCountryName));
+	document.querySelector('#findCountry').value = clickCountryName;
+
+});
+
 
 function fillGlobalInfo() {
 	const globalInfo = document.querySelector('#globalInfo');
@@ -172,8 +184,9 @@ function updateView() {
 }
 
 function findCountryData(countryName) {
+	countryName = countryName.toLowerCase().replaceAll(' ', '-');
 	for (countryData of objTotalConfirmed.Countries) {
-		if (countryName === countryData.Country) {
+		if (countryName === countryData.Slug) {
 			return countryData;
 		}
 	}
