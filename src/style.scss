@@ -1,9 +1,9 @@
- @import "./mapGraph/map/App.css";
- @import "./mapGraph/map/InfoBox.css";
- @import "./mapGraph/map/Map.css";
- @import "./mapGraph/map/Table.css";
- @import "./mapGraph/map/leaflet.css";
- @import "./assets/tableOne";
+@import "./mapGraph/map/App.css";
+@import "./mapGraph/map/InfoBox.css";
+@import "./mapGraph/map/Map.css";
+@import "./mapGraph/map/Table.css";
+@import "./mapGraph/map/leaflet.css";
+@import "./assets/tableOne";
 // === Mixins ===
 @mixin font-main {
   font-family: "Roboto", sans-serif;
@@ -25,23 +25,44 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   @include font-main;
   width: 100vw;
+  height: 100vh;
   margin: 0 auto;
   padding: 0;
   overflow-x: hidden;
   color: white;
 }
 
+main {
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+}
+
+.row-container {
+  overflow: auto;
+}
+
 // === Table ===
 .table-container {
+  flex: 1;
   font-size: 1.2rem;
   display: flex;
+  overflow: hidden;
   flex-direction: column;
   border: 1px solid black;
   background-color: #212529;
 
   .table-1 {
+    overflow: hidden;
     .thead {
       display: flex;
       justify-content: center;
@@ -61,9 +82,8 @@ body {
 
     .tbody {
       display: block;
-      max-height: 432px;
-      height: auto;
-      overflow: scroll;
+      height: 100%;
+      overflow: auto;
       overflow-x: hidden;
 
       .statistic-country {
@@ -182,8 +202,10 @@ body {
 
 // === Footer ===
 .footer {
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto;
   display: flex;
-  justify-content: center;
   align-items: center;
   width: 100%;
   height: 300px;
@@ -267,6 +289,9 @@ body {
 }
 
 @media (max-width: 767px) {
+  .xs-col {
+    max-height: 510px;
+  }
   .table-container {
     .table-1 {
       font-size: 2rem;
@@ -312,3 +337,8 @@ body {
   border: 1px solid black;
 }
 // === /bootstrap-grid ===
+
+.mapReact {
+  width: 100%;
+  flex: 1;
+}

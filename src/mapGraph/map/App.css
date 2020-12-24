@@ -2,8 +2,8 @@
   margin: 0;
 }
 
-
 .app {
+  height: 100%;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -50,13 +50,15 @@
   color: aliceblue !important;
 }
 
-.h3, h3 {
+.h3,
+h3 {
   color: aliceblue;
 }
 .MuiTypography-colorTextSecondary {
   color: aliceblue !important;
 }
-.col, [class*="col-"] {
+.col,
+[class*="col-"] {
   border: none !important;
   display: block;
 }
@@ -64,3 +66,7 @@
   padding-right: 0px !important;
   padding-left: 0px !important;
 } */
+
+.app .MuiPaper-elevation1 {
+  box-shadow: none;
+}
