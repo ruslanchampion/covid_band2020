@@ -5,17 +5,22 @@ $color-background-dark-gray: #404040;
 $color-light-gray: #bdbdbd;
 
 ::-webkit-scrollbar {
-  height: 0.8rem;
-  width: 0.8rem;
-  background: $color-background-dark-gray;
+  width: 7px;
 }
 
-::-webkit-scrollbar-corner {
-  background: $color-background-dark-gray;
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #5c5c5c;
+  background: #888;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 Style Attribute {
@@ -50,7 +55,7 @@ button:focus {
 }
 
 #region {
-  height: 48rem;
+  height: 66rem;
   border-bottom: 1px solid $color-dark-gray;
   width: 100%;
   overflow: auto;
