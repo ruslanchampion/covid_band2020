@@ -39,7 +39,7 @@ body {
 main {
   max-width: 1140px;
   width: 100%;
-  margin: 0 auto;
+  margin: 20px auto 0;
   height: 100%;
 }
 
@@ -58,7 +58,6 @@ main {
   display: flex;
   overflow: hidden;
   flex-direction: column;
-  border: 1px solid black;
   background-color: #212529;
 
   .table-1 {
@@ -93,6 +92,9 @@ main {
         align-items: center;
         padding: 10px;
         cursor: pointer;
+        &:hover {
+          background-color: #888;
+        }
       }
 
       // === scroll ===
@@ -204,13 +206,14 @@ main {
 .footer {
   max-width: 1140px;
   width: 100%;
-  margin: 0 auto;
+  margin: 60px auto 0;
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 300px;
 
-  .info-container {
+  .info-container1 {
     display: flex;
     font-size: 1.8rem;
     font-weight: bold;
@@ -278,10 +281,13 @@ main {
   }
 
   .footer {
-    .info-container {
+    .info-container1 {
       .info {
         &__img {
           width: 100px;
+        }
+        .mentor {
+          width: 200px;
         }
       }
     }
@@ -334,7 +340,6 @@ main {
 .col,
 [class*="col-"] {
   display: flex;
-  border: 1px solid black;
 }
 // === /bootstrap-grid ===
 

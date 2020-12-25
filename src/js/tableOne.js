@@ -1,22 +1,23 @@
-let objTotalConfirmed = {}
+let objTotalConfirmed = {};
 let typeTimeView = 'Total';
 let typeAmount = 'absolute';
 let findCountry = '';
 
 function getTotalConfirmed() {
-	fetch("https://cors-anywhere.herokuapp.com/http://api.covid19api.com/summary")
-		.then(response => response.json())
-		.then(data => {
+	fetch('https://cors-anywhere.herokuapp.com/http://api.covid19api.com/summary')
+		.then((response) => response.json())
+		.then((data) => {
 			objTotalConfirmed = data;
 			addCountyInfo();
 			updateView();
 		});
+	// .catch((err) => console.log(err));
 }
 
 function addCountyInfo() {
 	let allPopulation = 0;
-	for (countryData of objTotalConfirmed.Countries) {
-		for (countryInfo of objPopulation) {
+	for (const countryData of objTotalConfirmed.Countries) {
+		for (const countryInfo of objPopulation) {
 			if (countryData.Country === countryInfo.name) {
 				countryData.flag = countryInfo.flag;
 				countryData.population = countryInfo.population;
@@ -30,14 +31,17 @@ function addCountyInfo() {
 let objPopulation = {};
 
 function getPopulation() {
-	fetch("https://cors-anywhere.herokuapp.com/https://restcountries.eu/rest/v2/all?fields=name;population;flag")
-		.then(response => response.json())
-		.then(data => {
+	fetch(
+		'https://cors-anywhere.herokuapp.com/https://restcountries.eu/rest/v2/all?fields=name;population;flag'
+	)
+		.then((response) => response.json())
+		.then((data) => {
 			objPopulation = data;
-		})
+		});
+	// .catch((err) => console.log(err));
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function () {
 	getPopulation();
 	getTotalConfirmed();
 });
@@ -47,28 +51,28 @@ const totalInTheCountry = document.querySelector('#totalInTheCountry');
 const perAllTime = document.querySelector('#perAllTime');
 const perDay = document.querySelector('#perDay');
 
-basedOn100thdPopulation.addEventListener("click", function (event) {
+basedOn100thdPopulation.addEventListener('click', function (event) {
 	basedOn100thdPopulation.classList.add('addVisit');
 	totalInTheCountry.classList.remove('addVisit');
 	typeAmount = '100thd';
 	updateView();
 });
 
-totalInTheCountry.addEventListener("click", function (event) {
+totalInTheCountry.addEventListener('click', function (event) {
 	totalInTheCountry.classList.add('addVisit');
 	basedOn100thdPopulation.classList.remove('addVisit');
 	typeAmount = 'absolute';
 	updateView();
 });
 
-perAllTime.addEventListener("click", function (event) {
+perAllTime.addEventListener('click', function (event) {
 	perAllTime.classList.add('addVisit');
 	perDay.classList.remove('addVisit');
 	typeTimeView = 'Total';
 	updateView();
 });
 
-perDay.addEventListener("click", function (event) {
+perDay.addEventListener('click', function (event) {
 	perDay.classList.add('addVisit');
 	perAllTime.classList.remove('addVisit');
 	typeTimeView = 'New';
@@ -76,7 +80,7 @@ perDay.addEventListener("click", function (event) {
 });
 
 const region = document.querySelector('#region ');
-region.addEventListener("click", function (event) {
+region.addEventListener('click', function (event) {
 	let clickElementCountry = event.target.closest('.blockOneCountry');
 	let clickCountryName = clickElementCountry.firstChild.innerHTML;
 
@@ -84,13 +88,12 @@ region.addEventListener("click", function (event) {
 	fillGlobalInfo();
 	createRegionElement(findCountryData(clickCountryName));
 	document.querySelector('#findCountry').value = clickCountryName;
-
 });
-
 
 function fillGlobalInfo() {
 	const globalInfo = document.querySelector('#globalInfo');
-	let globalInfoText = typeAmount === '100thd' ? 'based on 100thd population' : 'total in the country';
+	let globalInfoText =
+		typeAmount === '100thd' ? 'based on 100thd population' : 'total in the country';
 	globalInfo.innerHTML = 'Global ' + globalInfoText;
 
 	let timeText = typeTimeView === 'Total' ? ' per all time' : ' per day';
@@ -106,7 +109,7 @@ function fillGlobalInfo() {
 }
 
 function createCountryInfo() {
-	for (countryData of objTotalConfirmed.Countries) {
+	for (const countryData of objTotalConfirmed.Countries) {
 		if (countryData.population) {
 			createRegionElement(countryData);
 		}
@@ -115,25 +118,25 @@ function createCountryInfo() {
 
 function createRegionElement(countryData) {
 	const divRegionsData = document.querySelector('#region');
-	const divRegionsBlockOne = document.createElement("div");
-	divRegionsBlockOne.classList.add("blockOneCountry");
-	const divRegionDetails = document.createElement("div");
-	divRegionDetails.classList.add("propertiesCountry");
+	const divRegionsBlockOne = document.createElement('div');
+	divRegionsBlockOne.classList.add('blockOneCountry');
+	const divRegionDetails = document.createElement('div');
+	divRegionDetails.classList.add('propertiesCountry');
 
-	const pCountryName = document.createElement("p");
-	pCountryName.classList.add("cdr");
+	const pCountryName = document.createElement('p');
+	pCountryName.classList.add('cdr');
 	pCountryName.innerHTML = countryData.Country;
 
-	const pTotalConfirmed = document.createElement("p");
-	pTotalConfirmed.classList.add("confirmed");
+	const pTotalConfirmed = document.createElement('p');
+	pTotalConfirmed.classList.add('confirmed');
 	pTotalConfirmed.innerHTML = getTotalConfirmedInfo(countryData);
 
-	const pTotalDeaths = document.createElement("p");
-	pTotalDeaths.classList.add("deaths");
+	const pTotalDeaths = document.createElement('p');
+	pTotalDeaths.classList.add('deaths');
 	pTotalDeaths.innerHTML = getTotalDeathsInfo(countryData);
 
-	const pTotalRecovered = document.createElement("p");
-	pTotalRecovered.classList.add("recovered");
+	const pTotalRecovered = document.createElement('p');
+	pTotalRecovered.classList.add('recovered');
 	pTotalRecovered.innerHTML = getTotalRecoveredInfo(countryData);
 
 	divRegionsData.appendChild(divRegionsBlockOne);
@@ -185,7 +188,7 @@ function updateView() {
 
 function findCountryData(countryName) {
 	countryName = countryName.toLowerCase().replaceAll(' ', '-');
-	for (countryData of objTotalConfirmed.Countries) {
+	for (const countryData of objTotalConfirmed.Countries) {
 		if (countryName === countryData.Slug) {
 			return countryData;
 		}
@@ -194,7 +197,7 @@ function findCountryData(countryName) {
 }
 
 const searchCountry = document.querySelector('#searchCountry');
-searchCountry.addEventListener("click", function (event) {
+searchCountry.addEventListener('click', function (event) {
 	clearListcountryData();
 	fillGlobalInfo();
 	findCountry = document.querySelector('#findCountry').value;
@@ -207,7 +210,7 @@ searchCountry.addEventListener("click", function (event) {
 });
 
 const cleanCountry = document.querySelector('#cleanCountry');
-cleanCountry.addEventListener("click", function (event) {
+cleanCountry.addEventListener('click', function (event) {
 	findCountry = '';
 	updateView();
 	document.querySelector('#findCountry').value = '';
@@ -215,16 +218,18 @@ cleanCountry.addEventListener("click", function (event) {
 
 function errorNotFindCountry() {
 	const divRegionsData = document.querySelector('#region');
-	const divRegionsBlockOne = document.createElement("div");
-	divRegionsBlockOne.classList.add("blockOneCountry");
-	const divRegionDetails = document.createElement("div");
-	divRegionDetails.classList.add("propertiesCountry");
+	const divRegionsBlockOne = document.createElement('div');
+	divRegionsBlockOne.classList.add('blockOneCountry');
+	const divRegionDetails = document.createElement('div');
+	divRegionDetails.classList.add('propertiesCountry');
 
-	const pCountryName = document.createElement("p");
-	pCountryName.classList.add("cdr");
+	const pCountryName = document.createElement('p');
+	pCountryName.classList.add('cdr');
 	pCountryName.innerHTML = 'Error! Not found country. Write country again.';
 
 	divRegionsBlockOne.appendChild(pCountryName);
 	divRegionsBlockOne.appendChild(divRegionDetails);
 	divRegionsData.appendChild(divRegionsBlockOne);
 }
+
+export { clearListcountryData, fillGlobalInfo, createRegionElement, findCountryData };

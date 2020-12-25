@@ -1,6 +1,12 @@
 import create from './create';
 import { getDataCountries } from './Data';
 import Card from './Card';
+import {
+	clearListcountryData,
+	fillGlobalInfo,
+	createRegionElement,
+	findCountryData,
+} from './tableOne';
 
 const tableTitle = [
 	'Cases by country',
@@ -231,6 +237,10 @@ export default class Table {
 		this.card.createCard(data.country);
 		this.card.changeInfoNumbers(data);
 		this.card.setListeners();
+
+		clearListcountryData();
+		fillGlobalInfo();
+		console.log(createRegionElement(findCountryData(currentTarget.dataset.country)));
 	};
 
 	changeDisplayOfNumbers = (number) => number.toLocaleString();
