@@ -1,6 +1,12 @@
 import create from './create';
 import { getDataCountries } from './Data';
 import Card from './Card';
+import {
+	clearListcountryData,
+	fillGlobalInfo,
+	createRegionElement,
+	findCountryData,
+} from './tableOne';
 
 const tableTitle = [
 	'Cases by country',
@@ -78,11 +84,11 @@ export default class Table {
 		const tableContainer = document.querySelector('.table-container');
 
 		create(
-			'table',
+			'div',
 			'table-1 table-hover table-dark',
 			[
-				create('thead', 'thead', [
-					create('tr', 'thead-container', [
+				create('div', 'thead', [
+					create('div', 'thead-container', [
 						create('button', 'btn btn-prev table-btn', '', null, ['data-toggle', 'prev']),
 						create('span', 'table-title', `${tableTitle[this.currentCase]}`),
 						create('button', 'btn btn-next table-btn', '', null, ['data-toggle', 'next']),
@@ -91,29 +97,44 @@ export default class Table {
 			],
 			tableContainer
 		);
+
+		// create(
+		// 	'table',
+		// 	'table-1 table-hover table-dark',
+		// 	[
+		// 		create('thead', 'thead', [
+		// 			create('tr', 'thead-container', [
+		// 				create('button', 'btn btn-prev table-btn', '', null, ['data-toggle', 'prev']),
+		// 				create('span', 'table-title', `${tableTitle[this.currentCase]}`),
+		// 				create('button', 'btn btn-next table-btn', '', null, ['data-toggle', 'next']),
+		// 			]),
+		// 		]),
+		// 	],
+		// 	tableContainer
+		// );
 	};
 
 	setTableData(data = this.data) {
 		const table = document.querySelector('.table-1');
-		const tbody = create('tbody', 'tbody', null, table);
+		const tbody = create('div', 'tbody', null, table);
 
 		const sortData = this.sortData(data);
-		console.log(sortData);
+		// console.log(sortData);
 
 		sortData.forEach((element) => {
 			create(
-				'tr',
+				'div',
 				'statistic-country',
 				[
 					create(
-						'td',
+						'div',
 						'count-of-cases',
 						this.changeDisplayOfNumbers(element[dataCases[this.currentCase]]),
 						null,
 						['data-color', `${colorOfNumbers[this.currentCase]}`]
 					),
-					create('td', 'country', `${element.country}`),
-					create('td', null, [
+					create('div', 'country', `${element.country}`),
+					create('div', null, [
 						create('img', 'country-flag', null, null, [
 							'src',
 							`${this.isBelarus(element.countryInfo.flag)}`,
@@ -123,6 +144,28 @@ export default class Table {
 				tbody,
 				['data-country', `${element.country}`]
 			);
+			// create(
+			// 	'tr',
+			// 	'statistic-country',
+			// 	[
+			// 		create(
+			// 			'td',
+			// 			'count-of-cases',
+			// 			this.changeDisplayOfNumbers(element[dataCases[this.currentCase]]),
+			// 			null,
+			// 			['data-color', `${colorOfNumbers[this.currentCase]}`]
+			// 		),
+			// 		create('td', 'country', `${element.country}`),
+			// 		create('td', null, [
+			// 			create('img', 'country-flag', null, null, [
+			// 				'src',
+			// 				`${this.isBelarus(element.countryInfo.flag)}`,
+			// 			]),
+			// 		]),
+			// 	],
+			// 	tbody,
+			// 	['data-country', `${element.country}`]
+			// );
 		});
 	}
 
@@ -194,6 +237,10 @@ export default class Table {
 		this.card.createCard(data.country);
 		this.card.changeInfoNumbers(data);
 		this.card.setListeners();
+
+		clearListcountryData();
+		fillGlobalInfo();
+		console.log(createRegionElement(findCountryData(currentTarget.dataset.country)));
 	};
 
 	changeDisplayOfNumbers = (number) => number.toLocaleString();

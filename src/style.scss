@@ -1,9 +1,9 @@
- @import "./mapGraph/map/App.css";
- @import "./mapGraph/map/InfoBox.css";
- @import "./mapGraph/map/Map.css";
- @import "./mapGraph/map/Table.css";
- @import "./mapGraph/map/leaflet.css";
- @import "./assets/tableOne";
+@import "./mapGraph/map/App.css";
+@import "./mapGraph/map/InfoBox.css";
+@import "./mapGraph/map/Map.css";
+@import "./mapGraph/map/Table.css";
+@import "./mapGraph/map/leaflet.css";
+@import "./assets/tableOne";
 // === Mixins ===
 @mixin font-main {
   font-family: "Roboto", sans-serif;
@@ -25,23 +25,44 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
   @include font-main;
   width: 100vw;
+  height: 100vh;
   margin: 0 auto;
   padding: 0;
   overflow-x: hidden;
   color: white;
+  background-color: black;
+}
+
+main {
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+}
+
+.row-container {
+  overflow: auto;
 }
 
 // === Table ===
 .table-container {
+  flex: 1;
   font-size: 1.2rem;
   display: flex;
+  overflow: hidden;
   flex-direction: column;
-  border: 1px solid black;
   background-color: #212529;
 
   .table-1 {
+    overflow: hidden;
     .thead {
       display: flex;
       justify-content: center;
@@ -61,9 +82,8 @@ body {
 
     .tbody {
       display: block;
-      max-height: 432px;
-      height: auto;
-      overflow: scroll;
+      height: 100%;
+      overflow: auto;
       overflow-x: hidden;
 
       .statistic-country {
@@ -73,22 +93,22 @@ body {
         align-items: center;
         padding: 10px;
         cursor: pointer;
+        &:hover {
+          background-color: #888;
+        }
       }
 
       // === scroll ===
       &::-webkit-scrollbar {
-        width: 7px;
+        width: 0.8rem;
       }
 
       &::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-        border-radius: 20px;
+        background: #404040;
       }
 
       &::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 20px;
+        background: #5c5c5c;
       }
 
       &::-webkit-scrollbar-thumb:hover {
@@ -182,13 +202,16 @@ body {
 
 // === Footer ===
 .footer {
+  max-width: 1140px;
+  width: 100%;
+  margin: 60px auto 0;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 300px;
 
-  .info-container {
+  .info-container1 {
     display: flex;
     font-size: 1.8rem;
     font-weight: bold;
@@ -211,6 +234,7 @@ body {
       }
 
       &__text {
+		  color: white;
       }
     }
   }
@@ -256,10 +280,13 @@ body {
   }
 
   .footer {
-    .info-container {
+    .info-container1 {
       .info {
         &__img {
           width: 100px;
+        }
+        .mentor {
+          width: 200px;
         }
       }
     }
@@ -267,6 +294,9 @@ body {
 }
 
 @media (max-width: 767px) {
+  .xs-col {
+    max-height: 510px;
+  }
   .table-container {
     .table-1 {
       font-size: 2rem;
@@ -279,7 +309,14 @@ body {
     }
   }
 }
-
+@media (max-width: 767px) {
+.col-md-3{
+  order: 2;
+}
+.col-md-9 {
+  order: 1;
+}
+}
 [data-color="red"] {
   color: #e60000;
 }
@@ -309,6 +346,10 @@ body {
 .col,
 [class*="col-"] {
   display: flex;
-  border: 1px solid black;
 }
 // === /bootstrap-grid ===
+
+.mapReact {
+  width: 100%;
+  flex: 1;
+}
