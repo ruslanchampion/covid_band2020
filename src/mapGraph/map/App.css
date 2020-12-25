@@ -70,3 +70,6 @@ h3 {
 .app .MuiPaper-elevation1 {
   box-shadow: none;
 }
+.MuiButtonBase-root {
+  color: aliceblue;
+}

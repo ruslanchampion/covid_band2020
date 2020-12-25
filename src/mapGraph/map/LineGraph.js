@@ -56,9 +56,7 @@ const buildChartData = (data, casesType) => {
         x: date,
         y: Math.abs(data[casesType][date] - lastDataPoint) > MAXRANGE ? MAXRANGE : Math.abs(data[casesType][date] - lastDataPoint),
       };
-      console.log(newDataPoint);
       chartData.push(newDataPoint);
-      console.log(chartData);
     }
     lastDataPoint = data[casesType][date];
   }
