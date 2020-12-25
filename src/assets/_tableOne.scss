@@ -1,6 +1,6 @@
 $color-black: #000;
 $color-gray: #525352;
-$color-dark-gray: #444444;
+$color-dark-gray: black;
 $color-background-dark-gray: #404040;
 $color-light-gray: #bdbdbd;
 
@@ -65,22 +65,22 @@ button:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 0.1rem solid $color-gray;
+  border-bottom: 0.1rem solid $color-dark-gray;
   &:p {
     margin-left: 10rem;
     margin-bottom: 0rem;
   }
   &:hover {
-    background-color: #4f4f4f;
+	background-color: #4f4f4f;
+	cursor: pointer;
   }
 }
 
 .cdr {
-  line-height: 65px;
-
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-right: 30px;
+	line-height: 65px;
+    font-size: 1.4rem;
+    margin-right: 2rem;
+    min-width: 9.5rem;
 }
 
 .propertiesCountry {
@@ -91,7 +91,7 @@ button:focus {
 }
 
 .confirmed {
-  color: #73b2ff;
+  color: #63aeff;
   margin-top: 1rem;
 }
 
@@ -153,6 +153,7 @@ button:focus {
   border-right: 0.1rem solid $color-gray;
   border-left: 0.1rem solid $color-gray;
   border-bottom: 0.2rem solid #2493f2;
+  cursor: pointer;
 }
 #totalInTheCountry span,
 #basedOn100thdPopulation {
@@ -165,9 +166,9 @@ button:focus {
 }
 
 #globalInfo {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 400;
-  margin-left: 5rem;
+  margin-left: 3rem;
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   color: white;
@@ -176,8 +177,7 @@ button:focus {
 #globalAmount__confirmed,
 #globalAmount__deaths,
 #globalAmount__recovered {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.6rem;
   margin-left: 3rem;
   margin-bottom: 0rem;
   color: white;
@@ -185,30 +185,27 @@ button:focus {
 
 .global__buttons {
   display: flex;
-  row-gap: 3rem;
+  row-gap: 1rem;
   margin: 5px 5px 0 0;
   flex-direction: column;
 }
 
 #findCountry {
-  width: 15rem;
-  height: 2.5rem;
+	width: 21rem;
+	height:  4.267rem;
+	border-radius: 1rem;
+	margin-left: 1rem;
+	font-size: 1.3rem;
 }
 
-#searchCountry {
-  height: 2.5rem;
-  width: 2.5rem;
-  border: none;
-  border-radius: 3rem;
-  border: 0.1rem solid $color-gray;
-}
-
+#searchCountry,
 #cleanCountry {
-  height: 2.5rem;
-  width: 2.5rem;
+  height: 3.2rem;
+  width: 3.2rem;
   border: none;
   border-radius: 3rem;
   border: 0.1rem solid $color-gray;
+  cursor: pointer;
 }
 
 #cleanCountry:hover,
@@ -221,7 +218,7 @@ button:focus {
 }
 
 .inputButtons {
-  column-gap: 1rem;
+  column-gap: 0.5rem;
   display: flex;
 }
 

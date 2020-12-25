@@ -119,7 +119,7 @@ export default class Table {
 		const tbody = create('div', 'tbody', null, table);
 
 		const sortData = this.sortData(data);
-		console.log(sortData);
+		// console.log(sortData);
 
 		sortData.forEach((element) => {
 			create(

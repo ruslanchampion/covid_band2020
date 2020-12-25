@@ -1,7 +1,6 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-// import "./map/App.css"
 import { MenuItem, FormControl, Select, Card, CardContent } from '@material-ui/core';
 import InfoBox from './InfoBox';
 import LineGraph from './LineGraph';
@@ -9,7 +8,6 @@ import Table from './Table';
 import { sortData, prettyPrintStat } from './util';
 import numeral from 'numeral';
 import Map from './baseMap';
-// import "leaflet/dist/leaflet.css"
 
 function App() {
 	const [country, setInputCountry] = useState('worldwide');
@@ -57,6 +55,7 @@ function App() {
 		await fetch(url)
 			.then((response) => response.json())
 			.then((data) => {
+				console.log(countryCode);
 				setInputCountry(countryCode);
 				setCountryInfo(data);
 				setMapCenter([data.countryInfo.lat, data.countryInfo.long]);
