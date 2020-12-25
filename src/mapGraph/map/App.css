@@ -71,5 +71,6 @@ h3 {
   box-shadow: none;
 }
 .MuiButtonBase-root {
-  color: aliceblue;
+  background-color: blueviolet;
+  color: aliceblue !important;
 }
