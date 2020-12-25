@@ -98,18 +98,15 @@ main {
 
       // === scroll ===
       &::-webkit-scrollbar {
-        width: 7px;
+        width: 0.8rem;
       }
 
       &::-webkit-scrollbar-track {
-        background: #f1f1f1;
-        box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-        border-radius: 20px;
+        background: #404040;
       }
 
       &::-webkit-scrollbar-thumb {
-        background: #888;
-        border-radius: 20px;
+        background: #5c5c5c;
       }
 
       &::-webkit-scrollbar-thumb:hover {
